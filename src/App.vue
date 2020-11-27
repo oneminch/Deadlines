@@ -293,7 +293,7 @@
 					}
 				}
 
-				// sort deadlines with date
+				// sort deadlines
 				this.sortDeadlines();
 			},
 			// Fetches and populate user preferences from offline store

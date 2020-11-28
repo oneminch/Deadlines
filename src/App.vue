@@ -192,7 +192,7 @@
 					'Are you sure?',
 					'Done!'
 				],
-				isSmallScreen: (window.innerWidth <= 540)
+				width: window.innerWidth
 			};
 		},
 		methods: {
@@ -546,24 +546,33 @@
 					this.$refs.purgeConfirmationButton.reset();
 				}				
 			},
+			width: function() {
+				console.log(this.width);
+			},
 			options: {
 				// update offline store when preferences change
 				handler: function() {
 					options_db.setItem("options", this.options);
 				},
 				deep: true
-			}
+			},
 		},
 		computed: {
 			// Check if there are any deadlines
 			isListEmpty: function() {
 				return this.deadlines.length === 0;
 			},
+			isSmallScreen: function() {
+				return this.width <= 540;
+			}
 		},
 		beforeMount() {
 			this.initDatabase();
 		},
-		// mounted() {
+		mounted() {
+			window.addEventListener('resize', () => {
+				this.width = window.innerWidth;
+			});
 			// let htmlElt = this.$el.parentElement.parentElement;
 			// let bodyElt = this.$el.parentElement;
 			// bodyElt.style.backgroundColor = "#ffffff";
@@ -572,7 +581,7 @@
 
 			// htmlElt.removeAttribute("theme");
 			// console.log(htmlElt);
-		// },
+		},
 	};
 </script>
 

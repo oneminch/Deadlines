@@ -34,20 +34,21 @@
 						</button>
 					</div>
 					<div>
-						<button
-							content="Add New"
-							v-tippy
-							@click="addNewDeadline"
-						>
-							<img src="./assets/add.svg" alt="Add Icon" />
-						</button>
-						<button
-							content="Cancel"
-							v-tippy
-							@click="visibleInput = false; expandedOptions = false;"
-						>
-							<img src="./assets/cancel.svg" alt="Cancel Icon" />
-						</button>
+						<div>
+							<tippy v-if="!isSmallScreen" to="addNew">Add New</tippy>
+							<button name="addNew" @click="addNewDeadline">
+								<img src="./assets/add.svg" alt="Add Icon" />
+								<span>Add</span>
+							</button>
+						</div>
+
+						<div>
+							<tippy v-if="!isSmallScreen" to="Cancel">Cancel</tippy>
+							<button name="Cancel" @click="visibleInput = false; expandedOptions = false;">
+								<img src="./assets/cancel.svg" alt="Cancel Icon" />
+								<span>Cancel</span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -190,7 +191,8 @@
 					'Purge Database',
 					'Are you sure?',
 					'Done!'
-				]
+				],
+				isSmallScreen: (window.innerWidth <= 540)
 			};
 		},
 		methods: {
@@ -653,23 +655,7 @@
 		--text-color-highlight: hsl(25, 70%, 45%);
 	}
 
-	#app {
-		/* filter: invert(1) hue-rotate(180deg); */
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		text-align: center;
-		/* background-color: #fff; */
-		color: var(--text-color-normal);
-		max-width: 960px;
-		min-width: 480px;
-		width: 100%;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-end;
-	}
-/* 
+		/* 
 	html[theme='dark-mode'] img,
 	picture,
 	video{
@@ -689,6 +675,23 @@
 	body {
 		background-color: var(--bg);
 		color: var(--color);
+	}
+
+	#app {
+		/* filter: invert(1) hue-rotate(180deg); */
+		/* background-color: #fff; */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-align: center;
+		color: var(--text-color-normal);
+		max-width: 960px;
+		min-width: 335px;
+		width: 100%;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-end;
 	}
 
 
@@ -928,6 +931,11 @@
 		align-items: flex-start;
 	}
 
+	.add-deadline .second > div:last-of-type span {
+		color: #fff;
+		display: none;
+	}
+
 	.add-deadline .first {
 		margin-bottom: 1rem;
 	}
@@ -959,22 +967,28 @@
 		text-align: center;
 		cursor: default;
 	}
-
-	.add-deadline .second > div:last-of-type > button {
+	
+	.add-deadline .second > div:last-of-type > div {
 		float: left;
 		min-width: 3rem;
 		height: 3rem;
 	}
 
-	.add-deadline .second > div:last-of-type > button:first-of-type {
+	.add-deadline .second > div:last-of-type > div > button {
+		min-width: 3rem;
+		height: 3rem;
+	}
+
+	.add-deadline .second > div:last-of-type > div:first-of-type > button {
 		border-color: #40c057;
 		background-color: #40c057;
 	}
 
-	.add-deadline .second > div:last-of-type > button:last-of-type {
+	.add-deadline .second > div:last-of-type > div:last-of-type > button {
 		border-color: #fa5252;
 		background-color: #fa5252;
 	}
+
 
 	.options {
 		border-radius: 15px;
@@ -1112,6 +1126,12 @@
 		border: none;
 	}
 
+	@media only screen and (max-width: 1024px) {
+		#app {
+			padding: 0 1rem;
+		}
+	}
+
 	@media only screen and (max-width: 640px) {
 		.header h2 {
 			font-size: x-large;
@@ -1124,18 +1144,126 @@
 		}
 
 		.deadline .first {
+			justify-content: flex-start;
 			margin-bottom: .5rem;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			min-width: 160px;
+			width: 100%;
 		}
 		
 		.deadline .second {
 			width: 100%;
 		}
 
+		.deadline .first .deadline-details {
+			/* overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			min-width: 160px; */
+			/* width: 85%; */
+		}
+
+		.deadline .first .deadline-details .truncate-text {
+			/* max-width: 65%;/ */
+		}
+	}
+
+
+	@media only screen and (max-width: 540px) {
+		.add-deadline {
+			padding: .5rem 0 .25rem 0;
+		}
+
+		.add-deadline .second {
+			flex-direction: column;
+			height: auto;
+			align-items: center;
+			padding: 0;
+			margin-bottom: 0;
+		}
+
+		.add-deadline .second > div:first-of-type {
+			margin-bottom: .75rem;
+		}
+
+		.add-deadline .second > div:first-of-type > * {
+			margin: 0;
+		}
+
+		.add-deadline .second > div:first-of-type input:first-of-type {
+			width: 90%;
+		}
+
+		.add-deadline .second > * {
+			width: 100%;
+		}
+
+		.add-deadline .second > div:last-of-type {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.add-deadline .second > div:last-of-type > div {
+			width: 45%;
+			margin: 0;
+		}
+
+		.add-deadline .second > div:last-of-type > div > button {
+			width: 100%;
+			margin: 0;
+		}
+
+		.add-deadline .second > div:last-of-type > div img {
+			display: none;
+		}
+
+		.add-deadline .second > div:last-of-type > div span {
+			display: inline-block;
+		}
 	}
 
 	@media only screen and (max-width: 512px) {
-		.header h2 {
+		.header {
+			flex-direction: column;
+			align-items:flex-start;
+		}
+
+		.header * {
+			margin: .25rem 0;
+		}
+
+		.header h2:last-of-type {
 			font-size: large;
+		}
+
+	}
+
+	@media only screen and (max-width: 480px) {
+		#app {
+			padding: 0 .5rem;
+		}
+
+		.list {
+			border-bottom-left-radius: 7.5px;
+		}
+
+		
+		.deadline .second input:first-of-type {
+			width: 80%;
+		}
+
+		.options-expanded {
+			width: 100%;
+			box-sizing: border-box;
+		}
+	}
+
+	@media only screen and (max-width: 360px) {
+		#app {
+			padding: 0 .25rem;
 		}
 	}
 

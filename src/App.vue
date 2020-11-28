@@ -933,6 +933,7 @@
 
 	.add-deadline .second > div:last-of-type span {
 		color: #fff;
+		font-size: 1rem;
 		display: none;
 	}
 
@@ -1114,10 +1115,6 @@
 		box-shadow: none !important;
 	}
 
-	.options .purge-data:hover {
-		/* box-shadow: none; */
-	}
-
 	.invisible {
 		display: none;
 	}
@@ -1155,18 +1152,6 @@
 		
 		.deadline .second {
 			width: 100%;
-		}
-
-		.deadline .first .deadline-details {
-			/* overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			min-width: 160px; */
-			/* width: 85%; */
-		}
-
-		.deadline .first .deadline-details .truncate-text {
-			/* max-width: 65%;/ */
 		}
 	}
 

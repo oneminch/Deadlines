@@ -482,7 +482,7 @@
 						if (Array.isArray(validatedContents)) {
 							vm.populateDeadlines(validatedContents);
 							vm.updateDatabase(false);
-							vm.$toast.success("Data Imported Successfully.");
+							vm.$toast.success(`Imported ${validatedContents.length} Deadline(s) Successfully.`);
 						} else if (validatedContents !== -1) {
 							// show error unless error already shown
 							vm.$toast.error("Unable to Import: Invalid File Contents.");
@@ -575,28 +575,27 @@
 </script>
 
 <style>
+	@import url('https://overpass-30e2.kxcdn.com/overpass-mono.css');
+
 	/* Import font */
 	@font-face {
-		font-family: "JetBrainsMono";
-		src: url("https://cdn.jsdelivr.net/gh/jetbrains/jetbrainsmono@1.0.1/web/woff2/JetBrainsMono-Bold.woff2")
-				format("woff2"),
-			url("https://cdn.jsdelivr.net/gh/jetbrains/jetbrainsmono@1.0.1/web/woff/JetBrainsMono-Bold.woff")
-				format("woff");
-		font-weight: normal;
+		font-family: 'JetBrains Mono';
+		src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff2/JetBrainsMono-Bold.woff2') format('woff2'),
+			url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff/JetBrainsMono-Bold.woff') format('woff');
+		font-weight: 500;
 		font-style: normal;
+		font-display: swap;
 	}
 
 	/* Import bold font */
 	@font-face {
-		font-family: "JetBrainsMono";
-		src: url("https://cdn.jsdelivr.net/gh/jetbrains/jetbrainsmono@1.0.1/web/woff2/JetBrainsMono-Bold.woff2")
-				format("woff2"),
-			url("https://cdn.jsdelivr.net/gh/jetbrains/jetbrainsmono@1.0.1/web/woff/JetBrainsMono-Bold.woff")
-				format("woff");
-		font-weight: bold;
+		font-family: 'JetBrains Mono';
+		src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff2/JetBrainsMono-ExtraBold.woff2') format('woff2'),
+			url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff/JetBrainsMono-ExtraBold.woff') format('woff');
+		font-weight: 600;
 		font-style: normal;
+		font-display: swap;
 	}
-
 
 	/* html, body {
 		background-color: #fff;
@@ -656,7 +655,6 @@
 
 	#app {
 		/* filter: invert(1) hue-rotate(180deg); */
-		font-weight: bold;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
@@ -696,8 +694,8 @@
 
 	* {
 		/* border: .1px solid red; */
-		font-family: "JetBrainsMono", monospace;
-		font-weight: bold;
+		font-family:  "JetBrains Mono", "overpass-mono", "Cascadia Mono", "Lucida Console", monospace;
+		font-weight: 500;
 		box-sizing: border-box;
 		transition: all 0.3s;
 		outline: none;
@@ -764,6 +762,10 @@
 		user-select: none;
 	}
 
+	.header * {
+		font-weight: 600;
+	}
+
 	.header h2 {
 		display: flex;
 		justify-content: center;
@@ -812,7 +814,6 @@
 		width: 90%;
 		min-width: 3rem;
 		height: 3rem;
-		font-weight: bold;
 		font-size: 1.1rem;
 		border-radius: 10px;
 		padding: 0.5rem 1rem;
@@ -1074,6 +1075,10 @@
 		border: none;
 		font-size: 18px;
 		border-radius: 7.5px 7.5px 15px 15px;
+	}
+
+	.options .toggle-options span {
+		font-weight: 600;
 	}
 
 	.options .export-data,

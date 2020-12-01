@@ -546,9 +546,6 @@
 					this.$refs.purgeConfirmationButton.reset();
 				}				
 			},
-			width: function() {
-				console.log(this.width);
-			},
 			options: {
 				// update offline store when preferences change
 				handler: function() {
@@ -701,6 +698,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-end;
+		/* font-size: .9rem; */
+
 	}
 
 
@@ -737,6 +736,7 @@
 	input,
 	select {
 		padding: 0.75em 0.25em;
+		font-size: 1rem;
 		font-size: 100%;
 		border: 2px solid #c5c5c5;
 		text-align: center;
@@ -1097,12 +1097,18 @@
 		/* width: 3rem; */
 		color: #2c3e50;
 		border: none;
-		font-size: 18px;
+		font-size: 1.1rem;
 		border-radius: 7.5px 7.5px 15px 15px;
 	}
 
 	.options .toggle-options span {
 		font-weight: 600;
+	}
+
+	.options .export-data,
+	.options .import-data,
+	.options .purge-data {
+		font-size: .9rem;
 	}
 
 	.options .export-data,

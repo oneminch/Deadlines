@@ -10,7 +10,7 @@
 			</button>
 			<div v-else class="add-deadline">
 				<div class="first">
-					<input ref="input" type="text" placeholder="Enter deadline..." autofocus/>
+					<input ref="input" type="text" placeholder="Enter deadline..." maxlength="100" autofocus/>
 				</div>
 				<div class="second">
 					<div>
@@ -150,6 +150,7 @@
 	} from "date-fns";
 	import nid from "nid";
 	import { schema } from "./helpers/schema"
+	import { data } from "./helpers/onboarding_data"
 	import { deadlines_db, options_db } from "./helpers/localdb";
 
 	export default {
@@ -192,7 +193,7 @@
 					'Are you sure?',
 					'Done!'
 				],
-				width: window.innerWidth
+				width: window.innerWidth,
 			};
 		},
 		methods: {
@@ -226,7 +227,7 @@
 						// offline store for deadlines doesn't exist; initialize
 						if (db === null) {
 							deadlines_db
-								.setItem("deadlines", [])
+								.setItem("deadlines", data)
 								.then((value) => {
 									vm.populateDeadlines(value);
 								})
@@ -570,6 +571,8 @@
 			window.addEventListener('resize', () => {
 				this.width = window.innerWidth;
 			});
+
+			// console.log(data)
 			// let htmlElt = this.$el.parentElement.parentElement;
 			// let bodyElt = this.$el.parentElement;
 			// bodyElt.style.backgroundColor = "#ffffff";
@@ -874,6 +877,7 @@
 	}
 
 	.deadline .first {
+		height: auto;
 		overflow: hidden;
 	}
 	.deadline .first.overdue {
@@ -902,19 +906,20 @@
 	}
 
 	.deadline .first .color-code{
-		width: 5px;
-		height: 2.5rem;
+		min-width: 5px;
+		min-height: 2.75rem;
+		/* min-height: 100%; */
 		display: inline-block;
 		border-radius: 2.5px;
 		margin-right: .75rem;
 	}
 
 	.deadline .first .deadline-details .truncate-text {
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
+		/* hyphens: auto; */
+		line-height: 1.5;
 		min-width: 160px;
 		width: 85%;
+		margin-bottom: .25rem;
 	}
 
 	.add-deadline {
@@ -955,6 +960,7 @@
 		border-radius: 10px;
 		text-align: left;
 		padding: 0.75rem 1rem;
+		cursor: text;
 	}
 
 	.add-deadline .second > div:first-of-type {
@@ -1158,10 +1164,10 @@
 		.deadline .first {
 			justify-content: flex-start;
 			margin-bottom: .5rem;
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			min-width: 160px;
+			width: 100%;
+		}
+
+		.deadline .first .deadline-details .truncate-text {
 			width: 100%;
 		}
 		

@@ -1,10 +1,47 @@
 <template>
 	<div id="app">
+		<!-- Overlay - About Project -->
+		<div :class="[
+			'about-overlay',
+			{ invisible: !overlay }
+			]"
+			@click="hideOverlay"
+		>
+			<div class="about-info">
+				<img src="./assets/logo.png" alt="Logo" />
+				<p>
+					Deadlines is a simple, offline deadline tracker made with Vue.js and localForage.
+					<br><br>
+					All data is stored locally in the browser 🔐.
+					You can import/export deadlines from/to a JSON file. It also has dark mode 🌓.
+					<br><br>
+					If you want to view this overlay again, you can do so by clicking on or tapping the <i class="gg-info"></i> icon at the top of the page.
+
+				</p>
+				<div>
+					<a href="https://github.com/oneminch/deadlines" target="_blank" rel="noopener">
+						<span>GitHub</span>
+						<i class="gg-link"></i>
+					</a>
+					<button @click="hideOverlay">
+						<span>Continue to app</span>
+						<i class="gg-arrow-right-o"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Header - App Name, Logo and Today's Date -->
 		<div class="header">
-			<h2>Deadlines <span title="Work In Progress">(WIP)</span> <img src="./assets/logo.png" alt="Logo" /></h2>
+			<h2 @click="overlay = true">
+				<span>Deadlines</span>
+				<i class="gg-info"></i>
+			</h2>
 			<h2>{{ displayToday() }}</h2>
 		</div>
-		<div class="full list" @click="collapseOptions">
+	
+		<div class="list" @click="collapseOptions">
+			<!-- Add Deadline Button and Input -->
 			<button v-if="!visibleInput" @click="visibleInput = true; expandedOptions = false;">
 				Add New Deadline
 			</button>
@@ -54,7 +91,10 @@
 					</div>
 				</div>
 			</div>
+
 			<hr />
+
+			<!-- Deadlines List Rendered from Database -->
 			<div
 				v-for="(deadline, index) in deadlines"
 				:key="deadline.id"
@@ -93,10 +133,14 @@
 					</button>
 				</div>
 			</div>
+
+			<!-- An Empty Deadlines List -->
 			<div :class="['empty', 'list', { invisible: !isListEmpty }]">
 				<h2>You have no deadlines...🌴</h2>
 			</div>
 		</div>
+
+		<!-- List of Preferences & Tools -->
 		<div class="options" :class="{ 'options-expanded' : expandedOptions, 'options-collapsed' : !expandedOptions }">
 			<button class="toggle-options" @click="expandedOptions = !expandedOptions; ">
 				<span>Options</span>
@@ -178,12 +222,14 @@
 				currDate: this.offsetedToday(),
 				currIndex: -1,
 				currColor: "#f1c40f",
+				overlay: false,
 				visibleInput: false,
 				expandedOptions: false,
 				format: "MMM dd, yyyy",
 				idList: [],
 				deadlines: [],
 				options: {
+					firstTime: true,
 					toastEnabled: true,
 					darkThemeEnabled: false
 				},
@@ -227,6 +273,15 @@
 			};
 		},
 		methods: {
+			// hide 'about project' overlay
+			hideOverlay: function() {
+				this.overlay = false;
+
+				// if it's user's first time, save preferences
+				if (this.options.firstTime) {
+					this.options.firstTime = false;
+				}
+			},
 			// Offset date by 12 hours from its start
 			offsetDate: function(date) {
 				if (isToday(date)) {
@@ -256,6 +311,11 @@
 					.then(function(db) {
 						// offline store for deadlines doesn't exist; initialize
 						if (db === null) {
+							data.forEach(el => {
+								const tomorrow = (d => new Date(d.setDate(d.getDate() + 1)))(new Date);
+								el.date = vm.offsetDate(tomorrow);
+							});
+
 							deadlines_db
 								.setItem("deadlines", data)
 								.then((value) => {
@@ -285,6 +345,7 @@
 								.setItem("options", vm.options)
 								.then((value) => {
 									vm.populateOptions(value);
+									vm.overlay = vm.options.firstTime;
 								})
 								.catch((err) => {
 									// error setting up db
@@ -320,6 +381,12 @@
 				
 				for (let i = 0; i < data.length; i++) {
 					if (this.idList.indexOf(data[i].id) < 0) {
+						// if demo (onboarding) data, reset dates
+						if (data[i].id.startsWith("demo-")) {
+							const tomorrow = (d => new Date(d.setDate(d.getDate() + 1)))(new Date);
+							data[i].date = this.offsetDate(tomorrow);
+						}
+
 						this.idList.push(data[i].id);
 						data[i].date = new Date(data[i].date);
 						data[i].overdue = this.isOverdue(data[i]);
@@ -336,6 +403,7 @@
 					return;
 				}
 
+				this.options.firstTime = data.firstTime;
 				this.options.toastEnabled = data.toastEnabled;
 				this.options.darkThemeEnabled = data.darkThemeEnabled;
 			},
@@ -518,7 +586,7 @@
 							validatedContents.forEach(el => {
 								el.date = vm.offsetDate(el.date);
 							});
-							
+
 							vm.populateDeadlines(validatedContents);
 							vm.updateDatabase(false);
 							vm.$toast.success(`Imported ${validatedContents.length} Deadline(s) Successfully.`);
@@ -705,7 +773,6 @@
 	}
 
 	* {
-		/* border: .1px solid red; */
 		font-family:  "JetBrains Mono", "overpass-mono", "Cascadia Mono", "Lucida Console", monospace;
 		font-weight: 500;
 		box-sizing: border-box;
@@ -718,13 +785,10 @@
 		border: none;
 		border-radius: 8px;
 		margin-top: 1rem;
-		/* border-bottom: 8px solid #e9ecef; */
 		border-bottom: 10px solid var(--gray-border-color);
 	}
 
 	button {
-		/* min-width: 3rem;
-		height: 3rem; */
 		border: 2px solid;
 		margin-left: 0.75rem;
 		border-radius: 10px;
@@ -758,6 +822,117 @@
 		outline: none;
 	}
 
+
+	/* classes prefixed with 'gg' are CSS icons from CSS.gg */
+	.gg-info,
+	.gg-link,
+	.gg-arrow-right-o {
+		box-sizing: border-box;
+		position: relative;
+		display: inline-block;
+	}
+
+	.gg-info::after,
+	.gg-info::before,
+	.gg-link::after,
+	.gg-link::before,
+	.gg-arrow-right-o::after,
+	.gg-arrow-right-o::before {
+		content: "";
+		display: inline-block;
+		box-sizing: border-box;
+		position: absolute;
+	}
+
+	/* Info icon CSS from css.gg */
+	.gg-info {
+		width: 20px;
+		height: 20px;
+		border: 2px solid;
+		border-radius: 40px;
+		transform: scale(1.3);
+		color: var(--gray-text-color);
+	}
+
+	.gg-info::after,
+	.gg-info::before {
+		border-radius: 3px;
+		width: 2px;
+		background: var(--gray-text-color);
+		left: 7px;
+	}
+
+	.gg-info::after {
+		bottom: 2px;
+		height: 8px;
+	}
+
+	.gg-info::before {
+		height: 2px;
+		top: 2px;
+	} 
+
+	/* Right arrow icon CSS from css.gg */
+	.gg-arrow-right-o {
+		width: 22px;
+		height: 22px;
+		border: 2px solid;
+		border-radius: 20px;
+	}
+
+	.gg-arrow-right-o::after,
+	.gg-arrow-right-o::before {
+		right: 4px;
+	}
+
+	.gg-arrow-right-o::after {
+		width: 6px;
+		height: 6px;
+		border-top: 2px solid;
+		border-right: 2px solid;
+		transform: rotate(45deg);
+		bottom: 6px;
+	}
+
+	.gg-arrow-right-o::before {
+		width: 10px;
+		height: 2px;
+		bottom: 8px;
+		background: var(--text-color);
+	}
+
+	/* Link icon CSS from css.gg */
+	.gg-link {
+		transform: rotate(-45deg);
+		width: 8px;
+		height: 2px;
+		background: #ffffff;
+		border-radius: 4px;
+	}
+
+	.gg-link::after,
+	.gg-link::before {
+		border-radius: 3px;
+		width: 8px;
+		height: 10px;
+		border: 2px solid;
+		top: -4px;
+	}
+
+	.gg-link::before {
+		border-right: 0;
+		border-top-left-radius: 40px;
+		border-bottom-left-radius: 40px;
+		left: -6px;
+	}
+
+	.gg-link::after {
+		border-left: 0;
+		border-top-right-radius: 40px;
+		border-bottom-right-radius: 40px;
+		right: -6px;
+	}
+
 	.all-toasts {
         width: 65%;
 		-webkit-user-select: none;
@@ -765,6 +940,112 @@
 		-ms-user-select: none; 
 		user-select: none; 
     }
+
+	.about-overlay {
+		width: 100%;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, .85);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 9999;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		overflow: auto;
+	}
+
+	.about-info {
+		width: 75%;
+		min-width: 360px;
+		max-width: 1000px;
+		height: 75%;
+		min-height: 640px;
+		border-radius: 15px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 2rem;
+		color: var(--text-color);
+		background-color: var(--background-color);
+		border: 3px solid var(--wrapper-border-color);
+		overflow: auto;
+	}
+
+	.about-info img {
+		width: 4rem;
+		height: 4rem;
+	}
+
+	.about-info p {
+		width: 65%;
+		text-align: center;
+		line-height: 1.5;
+	}
+
+	.about-info p .gg-info {
+		transform: scale(.9);
+		color: var(--text-color);
+	}
+
+	.about-info p .gg-info::after,
+	.about-info p .gg-info::before {
+		background: var(--text-color);
+	}
+
+	.about-info > div {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: .5rem auto;
+	}
+
+	.about-info > div > a,
+	.about-info > div > button {
+		display: inline-block;
+		min-width: 3rem;
+		height: 2.5rem;
+		margin: .5rem 1rem;
+		padding: 0.25rem 1rem;
+		font-size: .9rem;
+		border: 2px solid;
+		box-sizing: border-box;
+		border-radius: 10px;
+	}
+
+	.about-info > div > a {
+		text-decoration: none;
+		cursor: pointer;
+		line-height: 2rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-color: #24292e;
+		color: #ffffff;
+		background-color: #24292e;
+	}
+
+	.about-info > div > button {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: var(--text-color);
+		border: 3px solid var(--wrapper-border-color);
+		background-color: var(--opt-button-background-color);
+	}
+
+	.about-info > div > a > span {
+		margin: 0 1rem 0 0;
+	}
+
+	.about-info > div > button > span{
+		margin: 0 .5rem 0 0;
+	}
 
 	.header {
 		width: 100%;
@@ -787,32 +1068,21 @@
 		justify-content: center;
 		align-items: center;
 		font-size: xx-large;
+		cursor: pointer;
 	}
 
 	.header h2 span {
-        vertical-align: sub;
-		font-size: medium;
-		align-self: flex-end;
-		color: var(--gray-text-color);
+        margin-right: .75rem;
 	}
 
 	.header h2:last-of-type {
 		color: var(--gray-text-color);
 	}
 
-	.header h2 img {
-		width: 2.25rem;
-		background-color: var(--gray-text-color);
-		margin: 0 0.5rem;
-		border-radius: 5px;
-		/* padding: .2rem; */
-	}
-
 	.list {
 		width: 100%;
 		margin: 0 auto;
 		border-radius: 15px 15px 7.5px 15px;
-		/* border-radius: 15px; */
 		border: 3px solid var(--wrapper-border-color);
 	}
 
@@ -914,14 +1184,12 @@
 	.deadline .first .color-code{
 		min-width: 5px;
 		min-height: 2.75rem;
-		/* min-height: 100%; */
 		display: inline-block;
 		border-radius: 2.5px;
 		margin-right: .75rem;
 	}
 
 	.deadline .first .deadline-details .truncate-text {
-		/* hyphens: auto; */
 		line-height: 1.5;
 		min-width: 160px;
 		width: 85%;
@@ -977,7 +1245,6 @@
 
 	.add-deadline .second > div:first-of-type > * {
 		margin-right: .15rem;
-		/* border: 1px solid red; */
 	}
 
 	.add-deadline .second > div:first-of-type > button {
@@ -1148,7 +1415,6 @@
 	}
 
 	.options .toggle-options {
-		/* width: 3rem; */
 		border: none;
 		font-size: 1.1rem;
 	}
@@ -1166,7 +1432,6 @@
 	.options .export-data,
 	.options .import-data {
 		border-color: var(--wrapper-border-color);
-		/* border-color: #fff; */
 		background-color: var(--opt-button-background-color);
 	}
 
@@ -1198,11 +1463,37 @@
 		color: var(--text-color);
 	}
 
+	@media only screen and (max-height: 645px) {
+		.about-overlay {
+			align-items: flex-start;
+		}
+	}
+
 	@media only screen and (max-width: 1024px) {
 		#app {
 			padding: 0 1rem;
 		}
 	}
+
+	@media only screen and (max-width: 840px) {
+		.about-info p {
+			width: 80%;
+		}
+	}
+
+	@media only screen and (max-width: 768px) {
+		.about-info {
+			width: 100%;
+			height: 100%;
+			padding: .5rem;
+			border-radius: 0;
+		}
+
+		.about-info p {
+			width: 85%;
+		}
+	}
+
 
 	@media only screen and (max-width: 640px) {
 		.header h2 {
@@ -1286,6 +1577,15 @@
 	}
 
 	@media only screen and (max-width: 512px) {
+		.about-info > div {
+			flex-direction: column;
+		}
+
+		.about-info img {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+
 		.header {
 			flex-direction: column;
 			align-items:flex-start;

@@ -18,6 +18,8 @@
 							:format="format"
 							:value="currDate"
 							@selected="newDate"
+							calendar-class="calendar-class"
+							input-class="input-class"
 							content="Pick date"
 							v-tippy
 						></datepicker>
@@ -26,7 +28,7 @@
 								v-model="currColor" 
 								show-fallback 
 								:swatch-size="35" 
-								:trigger-style="{ width: '30px', height: '30px', margin: '0 auto' }" 
+								:trigger-style="swatchCSS.trigger"
 								show-border 
 								shapes="circles"
 								:swatches="swatches"
@@ -76,6 +78,8 @@
 						:format="format"
 						:value="deadline.date"
 						@selected="updateDeadline"
+						input-class="input-class"
+						calendar-class="calendar-class"
 					></datepicker>
 					<button
 						@click="
@@ -96,8 +100,20 @@
 		<div class="options" :class="{ 'options-expanded' : expandedOptions, 'options-collapsed' : !expandedOptions }">
 			<button class="toggle-options" @click="expandedOptions = !expandedOptions; ">
 				<span>Options</span>
-				<img v-if="!expandedOptions" src="./assets/chevron-down.svg" alt="Options Icon" />
-				<img v-else src="./assets/chevron-up.svg" alt="Options Icon" />
+				<svg 
+					v-if="!expandedOptions"
+					xmlns="http://www.w3.org/2000/svg" 
+					viewBox="0 0 25 25"
+				>
+					<polyline points="6 9 12 15 18 9"/>
+				</svg>
+				<svg 
+					v-else
+					xmlns="http://www.w3.org/2000/svg" 
+					viewBox="0 0 25 25"
+				>
+					<polyline points="18 15 12 9 6 15"/>
+				</svg>
 			</button>
 			<div class="toast-toggle">
 				<span>Toasts</span>
@@ -106,8 +122,8 @@
 					:value="options.toastEnabled"
 					height="30"
 					width="50"
-					checkedBg="#2c3e50"
-					uncheckedBg="lightgrey"
+					:checkedBg="toggleColors.checked"
+					:uncheckedBg="toggleColors.unchecked"
 				/>
 			</div>
 			<div class="theme-toggle">
@@ -117,10 +133,11 @@
 					:value="options.darkThemeEnabled"
 					height="30"
 					width="50"
-					checkedBg="#2c3e50"
-					uncheckedBg="lightgrey"
+					:checkedBg="toggleColors.checked"
+					:uncheckedBg="toggleColors.unchecked"
 				/>
-			</div>			
+			</div>
+			<hr>			
 			<button class="export-data" @click="exportData">
 				Export to JSON
 			</button>
@@ -160,7 +177,7 @@
 				currID: -1,
 				currDate: this.offsetedToday(),
 				currIndex: -1,
-				currColor: "#2c3e50",
+				currColor: "#f1c40f",
 				visibleInput: false,
 				expandedOptions: false,
 				format: "MMM dd, yyyy",
@@ -183,11 +200,23 @@
 					"#f39c12",
 					"#d35400",
 					"#e74c3c",
+					"#ffffff",
 					"#ecf0f1",
 					"#bdc3c7",
-					"#95a5a6",
-					"#2c3e50"
+					"#171a1d"
 				],
+				toggleColors: {
+					checked: '#40c057',
+					unchecked: '#ced4da'
+				},
+				swatchCSS: {
+					trigger: {
+						width: '30px',
+						height: '30px',
+						margin: '0 auto',
+						border: '1px solid #a1adb9'
+					}
+				},
 				purgeConfirmMessages: [
 					'Purge Database',
 					'Are you sure?',
@@ -548,9 +577,31 @@
 				}				
 			},
 			options: {
-				// update offline store when preferences change
 				handler: function() {
-					options_db.setItem("options", this.options);
+					// toggle dark mode
+					let rootElt = document.querySelector('html');
+
+					if (this.options.darkThemeEnabled && !rootElt.hasAttribute('data-theme')) {
+						rootElt.setAttribute('data-theme','dark');
+						this.toggleColors.unchecked = "#576a7c"; // update color for toggles
+					} else if (!this.options.darkThemeEnabled) {
+						rootElt.removeAttribute('data-theme');
+						this.toggleColors.unchecked = "#ced4da"; // update color for toggles
+					}
+
+					// update offline store when preferences change
+					let vm = this;
+					options_db
+						.setItem("options", this.options)
+						.then(() => {
+							if (vm.options.toastEnabled) {
+								vm.$toast.success("Preferences successfully updated.");
+							}
+						})
+						.catch((err) => {
+							vm.$toast.error("Error updating database for preferences.");
+							throw err;
+						});
 				},
 				deep: true
 			},
@@ -571,16 +622,6 @@
 			window.addEventListener('resize', () => {
 				this.width = window.innerWidth;
 			});
-
-			// console.log(data)
-			// let htmlElt = this.$el.parentElement.parentElement;
-			// let bodyElt = this.$el.parentElement;
-			// bodyElt.style.backgroundColor = "#ffffff";
-			// htmlElt.setAttribute("data-theme","dark");
-			// htmlElt.classList.add("dark");
-
-			// htmlElt.removeAttribute("theme");
-			// console.log(htmlElt);
 		},
 	};
 </script>
@@ -608,91 +649,44 @@
 		font-display: swap;
 	}
 
-	/* html, body {
-		background-color: #fff;
-		background-color: red;
-	}
-
-	html[theme='dark-mode'] {
-		filter: invert(1) hue-rotate(180deg);
-	}	
-
-	html[theme='dark-mode'] body {
-		filter: invert(1) hue-rotate(180deg);
-	} */
-
-	/* html.dark body {
-		background: #000;
-	} */
-
-	/* .vue-switcher {
-
-		border: .1px solid green !important;
-	} */
-
-	.vue-switcher-theme--custom.vue-switcher-color--dark div {
-		/* background-color: #40c057; */
-
-		background-color: #2c3e50;
-		/* box-shadow: 2px 2px 5px rgba(0, 0, 0, .2); */
-	}
-	
-	
-	.vue-switcher-theme--custom.vue-switcher-color--dark div:after {
-		background-color: #ffffff; 
-		/* box-shadow: 2px 2px 5px rgba(0, 0, 0, .2); */
-	}
-
-	.vue-switcher-theme--custom.vue-switcher-color--dark.vue-switcher--unchecked div {
-		background-color: #cecece; 
-		/* box-shadow: 2px 2px 5px rgba(0, 0, 0, .2); */
-	}
-  
-	.vue-switcher-theme--custom.vue-switcher-color--dark.vue-switcher--unchecked div:after {
-		background-color: #ffffff; 
+	:root {
+		--primary-red-color: #fa5252;
+		--primary-green-color: #40c057;
+		--overdue-red-color: #e63946;
+		--gray-text-color: #748ca3;
 	}
 
 	html {
-		--text-color-normal: #2c3e50;
-		--text-color-light: #8cabd9;
+		--text-color: #2c3e50;
+		--background-color: #ffffff;
+		--gray-border-color: #ced4da;
+		--wrapper-border-color: #2c3e50;
+		--add-button-background-color: #2c3e50;
+		--opt-button-background-color: #ffffff;
+		--opt-toggle-background-color: #e9ecef;
 	}
 
 	html[data-theme='dark'] {
-		--text-color-normal: #74a2cf;
-		--text-color-light: hsl(210, 15%, 35%);
-		--text-color-richer: hsl(210, 50%, 72%);
-		--text-color-highlight: hsl(25, 70%, 45%);
+		--text-color: #ffffff;
+		--background-color: #171a1d;
+		--gray-border-color: #3e4a57;
+		--wrapper-border-color: #3e4a57;
+		--add-button-background-color: #3e4a57;
+		--opt-button-background-color: #3e4a57;
+		--opt-toggle-background-color: #3e4a57;
 	}
 
-		/* 
-	html[theme='dark-mode'] img,
-	picture,
-	video{
-		filter: invert(1) hue-rotate(180deg);
-	} */
-	
-	:root {
-		--bg: #fff;
-		--color: #333333;
+	html,
+	body  {
+		background-color: var(--background-color);
+		color: var(--text-color);
 	}
 
-	html.dark-mode {
-		--bg: #232b32;
-		--color: #ddd8ca;
-	}
-
-	body {
-		background-color: var(--bg);
-		color: var(--color);
-	}
 
 	#app {
-		/* filter: invert(1) hue-rotate(180deg); */
-		/* background-color: #fff; */
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
-		color: var(--text-color-normal);
 		max-width: 960px;
 		min-width: 335px;
 		width: 100%;
@@ -701,10 +695,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-end;
-		/* font-size: .9rem; */
-
 	}
-
 
 	* {
 		/* border: .1px solid red; */
@@ -720,7 +711,8 @@
 		border: none;
 		border-radius: 8px;
 		margin-top: 1rem;
-		border-bottom: 10px solid #dddddd;
+		/* border-bottom: 8px solid #e9ecef; */
+		border-bottom: 10px solid var(--gray-border-color);
 	}
 
 	button {
@@ -741,7 +733,9 @@
 		padding: 0.75em 0.25em;
 		font-size: 1rem;
 		font-size: 100%;
-		border: 2px solid #c5c5c5;
+		color: var(--gray-text-color);
+		background-color: var(--background-color);
+		border: 3px solid var(--gray-border-color);
 		text-align: center;
 		border-radius: 10px;
 		cursor: pointer;
@@ -792,16 +786,16 @@
         vertical-align: sub;
 		font-size: medium;
 		align-self: flex-end;
-		color: #6c8eaf;
+		color: var(--gray-text-color);
 	}
 
 	.header h2:last-of-type {
-		color: #aaa;
+		color: var(--gray-text-color);
 	}
 
 	.header h2 img {
 		width: 2.25rem;
-		background-color: #aaa;
+		background-color: var(--gray-text-color);
 		margin: 0 0.5rem;
 		border-radius: 5px;
 		/* padding: .2rem; */
@@ -812,7 +806,7 @@
 		margin: 0 auto;
 		border-radius: 15px 15px 7.5px 15px;
 		/* border-radius: 15px; */
-		border: 3px solid #2c3e50;
+		border: 3px solid var(--wrapper-border-color);
 	}
 
 	.empty {
@@ -822,7 +816,7 @@
 	}
 
 	.empty h2 {
-		color: #aaa;
+		color: var(--gray-text-color);
 	}
 
 	.list > button:first-of-type {
@@ -834,13 +828,13 @@
 		padding: 0.5rem 1rem;
 		margin: 1rem auto 0.5rem auto;
 		color: #ffffff;
-		background-color: #2c3e50;
-		border-color: #2c3e50;
+		background-color: var(--add-button-background-color);
+		border-color: var(--add-button-background-color);
 	}
 
 	.list > button:first-of-type:hover {
-		color: #2c3e50;
-		background-color: #ffffff;
+		color: var(--text-color);
+		background-color: var(--background-color);
 	}
 
 	.deadline,
@@ -854,7 +848,7 @@
 	.deadline {
 		margin: 0 auto;
 		padding: 1.5rem 0rem;
-		border-bottom: 2px solid #c5c5c5;
+		border-bottom: 3px solid var(--gray-border-color);
 	}
 
 	.first {
@@ -881,19 +875,19 @@
 		overflow: hidden;
 	}
 	.deadline .first.overdue {
-		color: #e63946;
+		color: var(--overdue-red-color);
 	}
 
 	.deadline .first span:last-of-type {
 		font-size: 0.85rem;
-		color: #aaa;
+		color: var(--gray-text-color);
 	}
 
 	.deadline .second button {
 		min-width: 3rem;
 		height: 3rem;
-		border-color: #fa5252;
-		background-color: #fff;
+		border-color: var(--primary-red-color);
+		background-color: var(--background-color);
 	}
 
 	.deadline .first .deadline-details {
@@ -903,6 +897,11 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		overflow: hidden;
+	}
+
+	.deadline .second input,
+	.deadline .second select {
+		border-width: 2px;
 	}
 
 	.deadline .first .color-code{
@@ -977,11 +976,18 @@
 	.add-deadline .second > div:first-of-type > button {
 		min-width: 3rem;
 		height: 3rem;
-		border: 2px solid #c5c5c5;
-		background-color: #fff;
+		border: 3px solid var(--gray-border-color);
+		background-color: var(--background-color);
 		padding-top: .15rem;
 		text-align: center;
 		cursor: default;
+	}
+	
+	/* I know about !important. Trust me it's important this time */
+	.add-deadline .second > div:first-of-type > button .vue-swatches__container {
+		box-shadow: none !important;
+		border: 2px solid var(--gray-border-color) !important;
+		background-color: var(--background-color) !important;
 	}
 	
 	.add-deadline .second > div:last-of-type > div {
@@ -996,13 +1002,13 @@
 	}
 
 	.add-deadline .second > div:last-of-type > div:first-of-type > button {
-		border-color: #40c057;
-		background-color: #40c057;
+		border-color: var(--primary-green-color);
+		background-color: var(--primary-green-color);
 	}
 
 	.add-deadline .second > div:last-of-type > div:last-of-type > button {
-		border-color: #fa5252;
-		background-color: #fa5252;
+		border-color: var(--primary-red-color);
+		background-color: var(--primary-red-color);
 	}
 
 
@@ -1010,7 +1016,7 @@
 		border-radius: 15px;
 		border-radius: 7.5px 7.5px 15px 15px;
 		margin: .5rem 0;
-		border: 3px solid #2c3e50;
+		border: 3px solid var(--wrapper-border-color);
 		overflow: hidden;
 		transition: all 0.1s linear;
 		box-sizing: content-box;
@@ -1041,7 +1047,27 @@
 		display: inline;
 	}
 
-	.options-expanded .toggle-options img {
+	.options .toggle-options svg {
+		width: 25px !important; 
+		height: 25px !important;
+		fill: none; 
+		stroke: #ffffff;
+		stroke-width: 3px;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		box-sizing: content-box;
+		stroke: var(--wrapper-border-color);
+	}
+
+	.options-collapsed .toggle-options {
+		padding: 0;
+	}
+
+	.options-expanded .toggle-options {
+		border-radius: 7.5px 7.5px 15px 15px;
+	}
+
+	.options-expanded .toggle-options svg {
 		margin-left: .75rem;
 	}
 
@@ -1052,9 +1078,19 @@
 		margin: 0 0 .5rem 0;
 		border-radius: 10px;
 		overflow: hidden;
-		background-color: #fff;
+		background-color: var(--background-color);
+		color: var(--text-color);
 		border: 2px solid;
 	}
+
+	.options hr {
+		width: 95%;
+		border: none;
+		border-radius: 2px;
+		margin: 1rem auto;
+		border-bottom: 2px solid var(--opt-toggle-background-color);
+	}
+
 
 	.options button label {
 		position: relative;
@@ -1084,10 +1120,15 @@
 		margin: 0 0 .5rem 0;
 		border-radius: 10px;
 		overflow: hidden;
-		background-color: #f5f5f5;
+		background-color: var(--opt-toggle-background-color);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	.options .theme-toggle span:last-of-type,
+	.options .toast-toggle span:last-of-type {
+		background-color: #fff;
 	}
 
 	.options .toast-toggle {
@@ -1101,10 +1142,8 @@
 
 	.options .toggle-options {
 		/* width: 3rem; */
-		color: #2c3e50;
 		border: none;
 		font-size: 1.1rem;
-		border-radius: 7.5px 7.5px 15px 15px;
 	}
 
 	.options .toggle-options span {
@@ -1119,20 +1158,22 @@
 
 	.options .export-data,
 	.options .import-data {
-		color: #2c3e50;
-		border-color: #2c3e50;
+		border-color: var(--wrapper-border-color);
+		/* border-color: #fff; */
+		background-color: var(--opt-button-background-color);
 	}
 
 	.options .import-data {
 		padding: 0;
 	}
 
+	/* I know about !important. Trust me it's important this time */
 	.options .purge-data {
 		min-width: 3rem;
 		height: 3rem;
 		color: #ffffff;
-		border-color: #fa5252;
-		background-color: #fa5252;
+		border-color: var(--primary-red-color);
+		background-color: var(--primary-red-color);
 		box-shadow: none !important;
 	}
 
@@ -1142,6 +1183,12 @@
 
 	.last-deadline {
 		border: none;
+	}
+
+	/* I know about !important. Trust me it's important this time */
+	.calendar-class, .input-class {
+		background-color: var(--background-color) !important;
+		color: var(--text-color);
 	}
 
 	@media only screen and (max-width: 1024px) {

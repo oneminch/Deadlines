@@ -7,7 +7,7 @@ export const schema = new Schema(
 		task: {
 			type: String,
 			required: true,
-			length: { min: 2, max: 100 },
+			length: { min: 1, max: 100 },
 		},
 		date: {
 			type: Date,

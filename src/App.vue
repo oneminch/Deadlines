@@ -118,7 +118,7 @@
 			<div class="toast-toggle">
 				<span>Toasts</span>
 				<VueToggles
-					@click="options.toastEnabled = !options.toastEnabled"
+					@click="options.toastEnabled = !options.toastEnabled; notify = true"
 					:value="options.toastEnabled"
 					height="30"
 					width="50"
@@ -129,7 +129,7 @@
 			<div class="theme-toggle">
 				<span>Dark Mode</span>
 				<VueToggles
-					@click="options.darkThemeEnabled = !options.darkThemeEnabled"
+					@click="options.darkThemeEnabled = !options.darkThemeEnabled; notify = true"
 					:value="options.darkThemeEnabled"
 					height="30"
 					width="50"
@@ -223,6 +223,7 @@
 					'Done!'
 				],
 				width: window.innerWidth,
+				notify: false // used for toastifications
 			};
 		},
 		methods: {
@@ -291,6 +292,7 @@
 									throw err;
 								});
 						} else {
+							vm.notify = false;
 							vm.populateOptions(db);
 						}
 					})
@@ -512,6 +514,11 @@
 
 						// if data is valid, populate and update db
 						if (Array.isArray(validatedContents)) {
+							// offset the hours of imported deadline dates
+							validatedContents.forEach(el => {
+								el.date = vm.offsetDate(el.date);
+							});
+							
 							vm.populateDeadlines(validatedContents);
 							vm.updateDatabase(false);
 							vm.$toast.success(`Imported ${validatedContents.length} Deadline(s) Successfully.`);
@@ -594,7 +601,7 @@
 					options_db
 						.setItem("options", this.options)
 						.then(() => {
-							if (vm.options.toastEnabled) {
+							if (vm.options.toastEnabled && vm.notify) {
 								vm.$toast.success("Preferences successfully updated.");
 							}
 						})

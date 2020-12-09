@@ -1,24 +1,17 @@
-# deadlines
+# Deadlines ⏳
 
-## Project setup
-```
-npm install
-```
+Deadlines is a simple, offline deadline tracker made with Vue.js and localForage. 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+All data is stored locally in the browser 🔐. 
 
-### Compiles and minifies for production
-```
-npm run build
-```
+You can import/export deadlines from/to a JSON file. 
 
-### Lints and fixes files
-```
-npm run lint
-```
+It also has dark mode 🌓.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Development
+
+### Project setup: `npm install`
+### Compiles and hot-reloads for development: `npm run serve`
+### Compiles and minifies for production: `npm run build`
+### Lints and fixes files: `npm run lint`

@@ -211,7 +211,7 @@
 	} from "date-fns";
 	import nid from "nid";
 	import { schema } from "./helpers/schema"
-	import { data } from "./helpers/onboarding_data"
+	import { onboardingData } from "./helpers/onboardingData"
 	import { deadlines_db, options_db } from "./helpers/localdb";
 
 	export default {
@@ -304,37 +304,7 @@
 			},
 			// Initialize offline database
 			initDatabase: function() {
-				let vm = this;
-
-				deadlines_db
-					.getItem("deadlines")
-					.then(function(db) {
-						// offline store for deadlines doesn't exist; initialize
-						if (db === null) {
-							data.forEach(el => {
-								const tomorrow = (d => new Date(d.setDate(d.getDate() + 1)))(new Date);
-								el.date = vm.offsetDate(tomorrow);
-							});
-
-							deadlines_db
-								.setItem("deadlines", data)
-								.then((value) => {
-									vm.populateDeadlines(value);
-								})
-								.catch((err) => {
-									// error setting up db
-									vm.$toast.error("Error setting up local database for deadlines.");
-									throw err;
-								});
-						} else {
-							vm.populateDeadlines(db);
-						}
-					})
-					.catch(function(err) {
-						// if there are any errors
-						vm.$toast.error("Error setting up local database for deadlines.");
-						throw err;
-					});
+				let vm = this, demoData = [];
 
 				options_db
 					.getItem("options")
@@ -360,6 +330,40 @@
 					.catch(function(err) {
 						// if there are any errors
 						vm.$toast.error("Error setting up local database.");
+						throw err;
+					});
+
+				deadlines_db
+					.getItem("deadlines")
+					.then(function(db) {
+						// offline store for deadlines doesn't exist; initialize
+						if (db === null) {
+							console.log('repopulating...');
+							
+							// update date of each demo deadline to the following day
+							demoData = [...onboardingData];
+							demoData.forEach(el => {
+								const tomorrow = (d => new Date(d.setDate(d.getDate() + 1)))(new Date);
+								el.date = vm.offsetDate(tomorrow);
+							});
+
+							deadlines_db
+								.setItem("deadlines", demoData)
+								.then((value) => {
+									vm.populateDeadlines(value);
+								})
+								.catch((err) => {
+									// error setting up db
+									vm.$toast.error("Error setting up local database for deadlines.");
+									throw err;
+								});
+						} else {
+							vm.populateDeadlines(db);
+						}
+					})
+					.catch(function(err) {
+						// if there are any errors
+						vm.$toast.error("Error setting up local database for deadlines.");
 						throw err;
 					});
 			},
@@ -412,7 +416,7 @@
 				let vm = this;
 
 				deadlines_db
-					.clear()
+					.setItem("deadlines", [])
 					.then(function() {
 						// update array once db is cleared
 						vm.deadlines = [];
@@ -757,7 +761,6 @@
 		color: var(--text-color);
 	}
 
-
 	#app {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
@@ -776,8 +779,10 @@
 		font-family:  "JetBrains Mono", "overpass-mono", "Cascadia Mono", "Lucida Console", monospace;
 		font-weight: 500;
 		box-sizing: border-box;
-		transition: all 0.3s;
 		outline: none;
+		transition: all 0.3s, color 0s, background-color 0s;
+		-moz-transition: all 0.3s, color 0s, background-color 0s;
+		-webkit-transition: all 0.3s, color 0s, background-color 0s;
 	}
 
 	hr {
@@ -850,7 +855,7 @@
 		height: 20px;
 		border: 2px solid;
 		border-radius: 40px;
-		transform: scale(1.3);
+		transform: scale(1.2);
 		color: var(--gray-text-color);
 	}
 
@@ -1287,14 +1292,17 @@
 
 
 	.options {
-		border-radius: 15px;
-		border-radius: 7.5px 7.5px 15px 15px;
-		margin: .5rem 0;
-		border: 3px solid var(--wrapper-border-color);
-		overflow: hidden;
-		transition: all 0.1s linear;
-		box-sizing: content-box;
 		height: auto;
+		margin: .5rem 0;
+		overflow: hidden;
+		border-radius: 15px;
+		box-sizing: content-box;
+		border-radius: 7.5px 7.5px 15px 15px;
+		border: 3px solid var(--wrapper-border-color);
+		transition: width 0.1s, max-height 0.1s, padding 0.1s;
+		-webkit-transition: width 0.1s, max-height 0.1s, padding 0.1s;
+		-moz-transition: width 0.1s, max-height 0.1s, padding 0.1s;
+		-o-transition: width 0.1s, max-height 0.1s, padding 0.1s;
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;

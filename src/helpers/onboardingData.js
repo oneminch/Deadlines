@@ -12,7 +12,7 @@ const date = new Date();
 
 let idCount = 1;
 
-const data = tasks.map((task) => {
+const onboardingData = tasks.map((task) => {
 	let d = {};
 	d.id = `demo-${idCount}`;
 	d.task = task;
@@ -23,4 +23,4 @@ const data = tasks.map((task) => {
 	return d;
 });
 
-export { data };
+export { onboardingData };

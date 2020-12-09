@@ -1240,6 +1240,7 @@
 		text-align: left;
 		padding: 0.75rem 1rem;
 		cursor: text;
+		color: var(--text-color);
 	}
 
 	.add-deadline .second > div:first-of-type {
@@ -1289,7 +1290,6 @@
 		border-color: var(--primary-red-color);
 		background-color: var(--primary-red-color);
 	}
-
 
 	.options {
 		height: auto;

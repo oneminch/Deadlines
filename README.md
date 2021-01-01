@@ -6,10 +6,9 @@ All data is stored locally in the browser 🔐.
 
 You can import/export deadlines from/to a JSON file. 
 
-It also has dark mode 🌓.
+It also has dark mode 🌓. <br/><br/>
 
-**Want to deploy to your own Vercel account/team?**
-
+### Want to deploy to your own Vercel account/team?
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Foneminch%2Fdeadlines)
 
 ![Screenshot](https://github.com/oneminch/deadlines/raw/main/src/assets/screenshot.jpg)

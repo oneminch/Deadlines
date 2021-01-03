@@ -28,7 +28,7 @@
 						<i class="gg-arrow-right-o"></i>
 					</button>
 				</div>
-				<a href="https://www.producthunt.com/posts/deadlines-950fa45d-e41f-417f-a661-7a26f861c4b2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deadlines-950fa45d-e41f-417f-a661-7a26f861c4b2" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=278969&theme=light" alt="Deadlines - A simple, offline deadline tracker | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+				<a href="https://www.producthunt.com/posts/deadlines-950fa45d-e41f-417f-a661-7a26f861c4b2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deadlines-950fa45d-e41f-417f-a661-7a26f861c4b2" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=278969&theme=dark" alt="Deadlines - A simple, offline deadline tracker | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 			</div>
 		</div>
 

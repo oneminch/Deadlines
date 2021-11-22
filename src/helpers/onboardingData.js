@@ -1,5 +1,5 @@
 const tasks = [
-	"Add a new deadline using the above button.",
+	"Add a new deadline using the button above.",
 	"Update the date of each deadline or delete it using the button next to it.",
 	"Change preferences using the dropdown located at the bottom right.",
 	"Import from or export to a JSON file using the options from the dropdown.",

@@ -5,10 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Vue
     steps:
-      - uses: actions/checkout@v2
-      - name: Build
+      - uses: actions/checkout@master
+      - id: Build-Vue
         uses: xRealNeon/VuePagesAction@1.0.1
         with:
+          username: "oneminch"
+          reponame: "deadlines"
+          token: ${{ secrets.GITHUB_TOKEN }}
           install_dependencies: true
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

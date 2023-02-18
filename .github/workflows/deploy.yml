@@ -1,14 +1,13 @@
 name: Deploy Vue to Github Pages
 on: [push]
 jobs:
-  build_deploy_vue:
+  build_vue:
     runs-on: ubuntu-latest
-    name: Build and Deploy Vue
+    name: Build Vue
     steps:
-      - uses: actions/checkout@v2
-      - id: Build-Deploy-Vue
-        uses: thefrustrateddev/vue-deploy-github-pages@v1.0.0
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Vue App to Github Pages
+        uses: StruggleYang/VuePagesAction@2.0.0
         with:
-          username: "oneminch"
-          reponame: "deadlines"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          useyarn: false

@@ -1,20 +1,14 @@
-name: Build & Deploy Vue
+name: Deploy Vue to Github Pages
 on: [push]
 jobs:
-  build_vue:
+  build_deploy_vue:
     runs-on: ubuntu-latest
-    name: Build Vue
+    name: Build and Deploy Vue
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - id: Build-Deploy-Vue
+        uses: thefrustrateddev/vue-deploy-github-pages@v1.0.0
         with:
-          node-version: 16
+          username: "oneminch"
+          reponame: "deadlines"
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm ci
-      - run: npm test
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: dist
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}

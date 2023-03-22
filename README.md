@@ -10,7 +10,7 @@ It also has dark mode 🌓. <br/><br/>
 
 ## Want to self-host?
 
-[![Deploy with Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=Cloudflare%20Pages&logoColor=white)](https://pages.cloudflare.com/)
+[![Deploy with Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=Cloudflare%20Pages&logoColor=white)](https://dash.cloudflare.com/login?redirect_uri=https://dash.cloudflare.com/?account=pages)
 
 [![Deploy with Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://app.netlify.com/start/deploy?repository=https://github.com/oneminch/deadlines)
 

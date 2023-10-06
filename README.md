@@ -6,7 +6,9 @@ All data is stored locally in the browser 🔐.
 
 You can import/export deadlines from/to a JSON file. 
 
-It also has dark mode 🌓. <br/><br/>
+It also has dark mode 🌓.
+
+![Screenshot](/public/screenshot.png)
 
 ## Want to self-host?
 
@@ -15,8 +17,6 @@ It also has dark mode 🌓. <br/><br/>
 [![Deploy with Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://app.netlify.com/start/deploy?repository=https://github.com/oneminch/deadlines)
 
 [![Deploy with Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Foneminch%2Fdeadlines)
-
-![Screenshot](https://github.com/oneminch/deadlines/raw/main/src/assets/screenshot.jpg)
 
 ## Development
 

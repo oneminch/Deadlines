@@ -1,75 +1,36 @@
-# Nuxt 3 Minimal Starter
+# Deadlines ⏳
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Deadlines is a simple, offline deadline tracker.
 
-## Setup
+All data is stored locally in the browser 🔐.
 
-Make sure to install the dependencies:
+You can import/export deadlines from/to a JSON file.
 
-```bash
-# npm
-npm install
+It also has dark mode 🌓.
 
-# pnpm
-pnpm install
+![Screenshot](/public/screenshot.png)
 
-# yarn
-yarn install
+> Code for the original version built using Vue 2 is on the [app/v1](https://github.com/oneminch/Deadlines/tree/app/v1) branch.
+>
+> The current version is a remake that uses Nuxt 3 and it's on the main branch.
 
-# bun
-bun install
-```
+## Want to self-host?
 
-## Development Server
+| Vercel                        | Netlify                        | Cloudflare Pages                        |
+| ----------------------------- | ------------------------------ | --------------------------------------- |
+| [![Vercel][vrc-img]][vrc-url] | [![Netlify][ntl-img]][ntl-url] | [![Cloudflare Pages][cfp-img]][cfp-url] |
 
-Start the development server on `http://localhost:3000`:
+## Development
 
-```bash
-# npm
-npm run dev
+**Project setup**: `pnpm install`
 
-# pnpm
-pnpm run dev
+**Compiles and hot-reloads for development**: `pnpm run dev`
 
-# yarn
-yarn dev
+**Compiles and minifies for production**: `pnpm run build`
 
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+[cfp-img]: https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=Cloudflare%20Pages&logoColor=white
+[cfp-url]: https://dash.cloudflare.com/login?redirect_uri=https://dash.cloudflare.com/?account=pages
+[ntl-img]: https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white
+[ntl-url]: https://app.netlify.com/start/deploy?repository=https://github.com/oneminch/deadlines
+[vrc-img]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
+[vrc-url]: https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Foneminch%2Fdeadlines

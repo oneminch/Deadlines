@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "deadlines",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,13 +10,18 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/icon": "^1.4.5",
     "@primevue/themes": "^4.0.4",
+    "joi": "^17.13.3",
+    "localforage": "^1.10.0",
     "nuxt": "^3.12.4",
     "primevue": "^4.0.4",
     "vue": "latest"
   },
-  "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247",
+  "packageManager": "pnpm@9.7.1",
   "devDependencies": {
+    "@nuxtjs/color-mode": "^3.4.4",
+    "@nuxtjs/tailwindcss": "^6.12.1",
     "@primevue/nuxt-module": "^4.0.4"
   }
 }

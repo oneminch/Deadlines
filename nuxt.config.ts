@@ -27,10 +27,18 @@ export default defineNuxtConfig({
       ]
     }
   },
+  colorMode: {
+    classSuffix: ""
+  },
   compatibilityDate: "2024-04-03",
   components: [{ path: "~/components", pathPrefix: false }],
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon", "@primevue/nuxt-module"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/icon",
+    "@primevue/nuxt-module",
+    "@nuxtjs/color-mode"
+  ],
   ssr: false,
   tailwindcss: {
     config: {

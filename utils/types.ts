@@ -13,9 +13,8 @@ interface DeadlineItem {
 }
 
 interface Options {
-  firstTime: boolean;
-  toastEnabled: boolean;
-  darkThemeEnabled: boolean;
+  firstTime?: boolean;
+  toastEnabled?: boolean;
 }
 
 type DBResponseType = DeadlineItem[] | Options | null;

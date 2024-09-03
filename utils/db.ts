@@ -13,7 +13,7 @@ export default class {
   ) => {
     let data = (await this.dbInstance.getItem(storeKey)) as typeof defaultData;
 
-    if (!data) {
+    if (data === null) {
       await this.dbInstance.setItem(storeKey, defaultData);
     }
   };
@@ -38,7 +38,7 @@ export default class {
     }
   };
 
-  public purgeOfflineData = async () => {
+  public hardPurgeOfflineData = async () => {
     await this.dbInstance.clear();
   };
 }

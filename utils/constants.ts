@@ -5,34 +5,34 @@ const DEADLINES_STORE_KEY = "lf_deadlines";
 const OPTIONS_STORE_KEY = "lf_options";
 
 const DEADLINES = [
-  "Add a new deadline using the button above.",
-  "Update the date of each deadline or delete it using the button next to it.",
-  "Change preferences using the dropdown located at the bottom right.",
-  "Import from or export to a JSON file using the options from the dropdown.",
-  "You can also purge your local data from the dropdown."
+  "Add new deadlines.",
+  "Update the date of a deadline.",
+  "Change app preferences using the gear icon at the top.",
+  "Export data to / import data from a JSON file.",
+  "Purge local data from the dropdown."
 ];
 
 const DEFAULT_OPTIONS: Options = {
   firstTime: true,
-  toastEnabled: true,
-  darkThemeEnabled: false
+  toastEnabled: true
 };
 
-const COLORS = ["#1abc9c", "#3498db", "#f1c40f", "#f39c12", "#2c3e50"];
+const COLORS = ["#20c997", "#fcc419", "#f06595", "#845ef7"];
 
-const ONBOARDING_DEADLINES = DEADLINES.map((deadline) => {
+const ONBOARDING_DEADLINES = DEADLINES.map((deadline, index) => {
   const d: DeadlineItem = {
-    id: `demo-${Math.random()}`,
+    id: `onboarding-${index}`,
     task: deadline,
     date: DateUtils.formatDate(DateUtils.getTomorrow()),
     overdue: false,
-    color: COLORS.pop() || "#fff"
+    color: circularAccess(COLORS, index)
   };
 
   return d;
 });
 
 export {
+  COLORS,
   DEFAULT_OPTIONS,
   ONBOARDING_DEADLINES,
   DEADLINES_STORE_KEY,

@@ -2,17 +2,17 @@
 
 Deadlines is a simple, offline deadline tracker.
 
-All data is stored locally in the browser 🔐.
+## Features
 
-You can import/export deadlines from/to a JSON file.
-
-It also has dark mode 🌓.
+- All Data Stored Locally in the Browser 🔐.
+- Data Import/Export from/to a JSON File 💾.
+- Dark Mode 🌓.
 
 ![Screenshot](/public/screenshot.png)
 
 > Code for the original version built using Vue 2 is on the [app/v1](https://github.com/oneminch/Deadlines/tree/app/v1) branch.
 >
-> The current version is a remake that uses Nuxt 3 and it's on the main branch.
+> The current version (on the main branch) is rebuilt using Nuxt 3.
 
 ## Want to self-host?
 

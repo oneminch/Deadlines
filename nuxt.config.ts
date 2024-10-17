@@ -34,6 +34,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   components: [{ path: "~/components", pathPrefix: false }],
   devtools: { enabled: false },
+  icon: {
+    mode: "svg",
+    serverBundle: "local"
+    // clientBundle: { icons: ["uil:github", "logos:vitejs"], scan: true }
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/icon",

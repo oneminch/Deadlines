@@ -15,7 +15,10 @@ export default class {
 
     if (data === null) {
       await this.dbInstance.setItem(storeKey, defaultData);
+      return defaultData;
     }
+
+    return data;
   };
 
   public getOfflineData = async (key: string): Promise<DBResponseType> => {
@@ -38,6 +41,9 @@ export default class {
     }
   };
 
+  /**
+   * Reset project to initial state
+   */
   public hardPurgeOfflineData = async () => {
     await this.dbInstance.clear();
   };

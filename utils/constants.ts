@@ -13,26 +13,21 @@ const DEADLINES = [
 ];
 
 const DEFAULT_OPTIONS: Options = {
-  firstTime: true,
-  toastEnabled: true
+  isFirstTime: true,
+  toastsEnabled: true
 };
-
-const COLORS = ["#20c997", "#fcc419", "#f06595", "#845ef7"];
 
 const ONBOARDING_DEADLINES = DEADLINES.map((deadline, index) => {
   const d: DeadlineItem = {
     id: `onboarding-${index}`,
     task: deadline,
-    date: DateUtils.formatDate(DateUtils.getTomorrow()),
-    overdue: false,
-    color: circularAccess(COLORS, index)
+    date: DateUtils.getTomorrow()
   };
 
   return d;
 });
 
 export {
-  COLORS,
   DEFAULT_OPTIONS,
   ONBOARDING_DEADLINES,
   DEADLINES_STORE_KEY,

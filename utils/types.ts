@@ -7,16 +7,22 @@ interface CustomNuxtApp extends NuxtApp {
 interface DeadlineItem {
   id: string;
   task: string;
-  date: string;
-  overdue: boolean;
-  color: string;
+  date: Date;
 }
 
 interface Options {
-  firstTime?: boolean;
-  toastEnabled?: boolean;
+  isFirstTime?: boolean;
+  toastsEnabled?: boolean;
 }
+
+type DatePickerModelValue = null | Date | Date[] | (null | Date)[];
 
 type DBResponseType = DeadlineItem[] | Options | null;
 
-export type { DeadlineItem, Options, DBResponseType, CustomNuxtApp };
+export type {
+  DatePickerModelValue,
+  DeadlineItem,
+  Options,
+  DBResponseType,
+  CustomNuxtApp
+};

@@ -1,130 +1,68 @@
-<script lang="ts" setup>
-  import type { DeadlineItem } from "~/utils/types";
-  import { DateUtils } from "~/utils/date-utils";
-  import DatePicker from "primevue/datepicker";
+<script setup lang="ts">
+  const toast = useCustomToast();
+  const { addDeadlineItem } = useDeadlines();
+  const currentDate = ref<DatePickerModelValue>(null);
+  const newEntry = ref("");
+  const inputRef = ref<HTMLInputElement | null>(null);
 
-  const currentDate = ref();
+  const createNewDeadline = async (e: Event) => {
+    e.preventDefault();
 
-  const createRandomDeadline = (): DeadlineItem => {
-    const randomThreeDigitInteger = () =>
-      (Math.floor(Math.random() * 900) + 100).toString();
+    if (!newEntry.value.trim()) {
+      toast.error("Please Enter a Deadline.", true);
+      return;
+    } else if (!currentDate.value) {
+      toast.error("Please Pick a Valid Date.", true);
+      return;
+    }
 
-    const id = randomThreeDigitInteger();
-
-    return {
-      id,
-      task: `Task - ${id}`,
-      date: DateUtils.formatDate(DateUtils.getRandomDate()),
-      color: "#edae49",
-      overdue: false
+    const deadlineItem: DeadlineItem = {
+      id: Date.now().toString(),
+      task: newEntry.value,
+      date: currentDate.value as Date
     };
+
+    newEntry.value = "";
+    currentDate.value = null;
+
+    await addDeadlineItem(deadlineItem);
   };
 
-  const { addDeadlineItem, purgeDeadlines, hardPurgeDeadlines } =
-    useDeadlines();
-
-  const addNewDeadline = async (e: Event) => {
-    e.preventDefault();
-
-    await addDeadlineItem(createRandomDeadline());
-  };
-
-  const purgeDB = async (e: Event) => {
-    e.preventDefault();
-
-    await purgeDeadlines();
-  };
-
-  const hardPurgeDB = async (e: Event) => {
-    e.preventDefault();
-
-    await hardPurgeDeadlines();
-  };
+  onMounted(() => {
+    nextTick(() => {
+      if (inputRef.value) {
+        inputRef.value.focus();
+      }
+    });
+  });
 </script>
 
 <template>
   <form
-    class="w-full rounded-lg p-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-600 flex flex-col gap-y-4">
+    class="w-full bg-transparent flex flex-col items-center gap-y-4"
+    @submit="createNewDeadline">
     <input
       type="text"
+      v-model="newEntry"
+      ref="inputRef"
       placeholder="Enter a Deadline"
       aria-label="Enter a Deadline"
-      class="h-9 flex items-center justify-center rounded-lg py-1 px-3 text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-600 focus-visible:global-focus" />
+      class="w-full h-10 text-base flex items-center justify-center rounded py-1 px-3 text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-600 focus-visible:global-focus" />
 
-    <div class="flex items-center gap-x-4 *:w-1/2">
-      <app-date-picker />
-      <!-- <app-date-picker /> -->
-      <!-- :pt="datePickerStyles" -->
-      <button class="action-item" @click="addNewDeadline">Add</button>
-      <button class="action-item" @click="purgeDB">Soft Purge</button>
-      <button class="action-item" @click="hardPurgeDB">Hard Purge</button>
-    </div>
-    <!-- <button
-      v-if="!visibleInput"
-      @click="
-        visibleInput = true;
-        expandedOptions = false;
-      "
-    >
-      Add New Deadline
+    <app-date-picker
+      class="!flex sm:!hidden"
+      :date="currentDate"
+      :is-inline="false"
+      @update:date="(date) => (currentDate = date)" />
+
+    <app-date-picker
+      class="!hidden sm:!flex"
+      :date="currentDate"
+      :is-inline="true"
+      @update:date="(date) => (currentDate = date)" />
+
+    <button class="action-item !w-full !h-10 !bg-violet-500 !border-none">
+      Create
     </button>
-    <div v-else class="add-deadline">
-      <div class="first">
-        <input
-          ref="input"
-          type="text"
-          placeholder="Enter deadline..."
-          maxlength="100"
-          autofocus
-        />
-      </div>
-      <div class="second">
-        <div>
-          <datepicker
-            :format="format"
-            :value="currDate"
-            @selected="newDate"
-            calendar-class="calendar-class"
-            input-class="input-class"
-            content="Pick date"
-            v-tippy
-          ></datepicker>
-          <button content="Pick color" title="Pick color">
-            <v-swatches
-              v-model="currColor"
-              show-fallback
-              :swatch-size="35"
-              :trigger-style="swatchCSS.trigger"
-              show-border
-              shapes="circles"
-              :swatches="swatches"
-            ></v-swatches>
-          </button>
-        </div>
-        <div>
-          <div>
-            <tippy v-if="!isSmallScreen" to="addNew">Add New</tippy>
-            <button name="addNew" @click="addNewDeadline">
-              <img src="/add.svg" alt="Add Icon" />
-              <span>Add</span>
-            </button>
-          </div>
-
-          <div>
-            <tippy v-if="!isSmallScreen" to="Cancel">Cancel</tippy>
-            <button
-              name="Cancel"
-              @click="
-                visibleInput = false;
-                expandedOptions = false;
-              "
-            >
-              <img src="/cancel.svg" alt="Cancel Icon" />
-              <span>Cancel</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </form>
 </template>

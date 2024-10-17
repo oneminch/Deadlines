@@ -10,14 +10,10 @@ export default class {
   }
 
   public initializeDeadlinesStore = async () => {
-    try {
-      await this.db.initializeKVStore(
-        DEADLINES_STORE_KEY,
-        ONBOARDING_DEADLINES
-      );
-    } catch (error) {
-      console.error("Error Initializing Deadlines Store:", error);
-    }
+    return await this.db.initializeKVStore(
+      DEADLINES_STORE_KEY,
+      ONBOARDING_DEADLINES
+    );
   };
 
   public getDeadlines = async (): Promise<DeadlineItem[]> => {
@@ -29,9 +25,5 @@ export default class {
 
   public setDeadlines = async (deadlines: DeadlineItem[]) => {
     await this.db.setOfflineData(DEADLINES_STORE_KEY, deadlines);
-  };
-
-  public hardPurgeDeadlines = async () => {
-    await this.db.hardPurgeOfflineData();
   };
 }

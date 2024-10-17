@@ -10,11 +10,12 @@ export default class {
   }
 
   public initializeOptionsStore = async () => {
-    try {
-      await this.db.initializeKVStore(OPTIONS_STORE_KEY, DEFAULT_OPTIONS);
-    } catch (error) {
-      console.error("Error Initializing Options Store:", error);
-    }
+    return (
+      ((await this.db.initializeKVStore(
+        OPTIONS_STORE_KEY,
+        DEFAULT_OPTIONS
+      )) as Options) || []
+    );
   };
 
   public getOptions = async (): Promise<Options> => {

@@ -2,17 +2,25 @@ import type { CustomNuxtApp, DeadlineItem } from "~/utils/types";
 import DeadlinesController from "~/utils/deadlines-controller";
 
 export default function useDeadlines() {
-  const { $offlineDB } = useNuxtApp() as CustomNuxtApp;
+  const { $offlineDB, hook } = useNuxtApp() as CustomNuxtApp;
   const controller = new DeadlinesController($offlineDB);
+  const toast = useCustomToast();
+  const { options } = useOptions();
 
   const deadlines = useState<DeadlineItem[]>("deadlines", () => []);
 
-  onMounted(async () => {
+  hook("app:mounted", async () => {
     try {
-      await controller.initializeDeadlinesStore();
-      deadlines.value = await controller.getDeadlines();
+      deadlines.value =
+        (await controller.initializeDeadlinesStore()) as DeadlineItem[];
+
+      const initializeType = options.value.isFirstTime
+        ? "Initialized"
+        : "Restored";
+      toast.success(`Local Database ${initializeType} for Deadlines.`);
     } catch (err) {
-      console.error("Error Initializing Deadlines Data", err);
+      // console.error("Error Initializing Deadlines Data", err);
+      toast.error("Error Initializing Local Database for Deadlines.");
     }
   });
 
@@ -23,8 +31,10 @@ export default function useDeadlines() {
       await controller.setDeadlines(
         JSON.parse(JSON.stringify(deadlines.value))
       );
+      toast.success("Deadline Added Successfully.");
     } catch (e) {
-      console.error("Error Adding Item", e);
+      // console.error("Error Adding Item", e);
+      toast.error("Error Adding Item.");
     }
   };
 
@@ -40,8 +50,10 @@ export default function useDeadlines() {
         await controller.setDeadlines(
           JSON.parse(JSON.stringify(deadlines.value))
         );
+        toast.success("Deadline Updated Successfully.");
       } catch (e) {
-        console.error("Error Updating Item", e);
+        // console.error("Error Updating Item", e);
+        toast.error("Error Updating Item.");
       }
     }
   };
@@ -53,8 +65,25 @@ export default function useDeadlines() {
       await controller.setDeadlines(
         JSON.parse(JSON.stringify(deadlines.value))
       );
+      toast.success("Deadline Deleted Successfully.");
     } catch (e) {
-      console.error("Error Deleting Item", e);
+      // console.error("Error Deleting Item", e);
+      toast.error("Error Deleting Item.");
+    }
+  };
+
+  const populateDeadlineItems = async (deadlineItems: DeadlineItem[]) => {
+    deadlineItems.forEach((deadline) => {
+      deadlines.value.push(deadline);
+    });
+
+    try {
+      await controller.setDeadlines(
+        JSON.parse(JSON.stringify(deadlines.value))
+      );
+    } catch (e) {
+      // console.error("Error Adding Items", e);
+      toast.error("Error Adding Items.");
     }
   };
 
@@ -65,18 +94,10 @@ export default function useDeadlines() {
       await controller.setDeadlines(
         JSON.parse(JSON.stringify(deadlines.value))
       );
+      toast.success("Database Purged Successfully.");
     } catch (e) {
-      console.error("Error Purging Deadlines", e);
-    }
-  };
-
-  const hardPurgeDeadlines = async () => {
-    deadlines.value.splice(0, deadlines.value.length);
-
-    try {
-      await controller.hardPurgeDeadlines();
-    } catch (e) {
-      console.error("Error Purging Deadlines", e);
+      // console.error("Error Purging Deadlines", e);
+      toast.error("Error Purging Database.");
     }
   };
 
@@ -92,7 +113,7 @@ export default function useDeadlines() {
     addDeadlineItem,
     updateDeadlineItem,
     deleteDeadlineItem,
-    purgeDeadlines,
-    hardPurgeDeadlines
+    populateDeadlineItems,
+    purgeDeadlines
   };
 }

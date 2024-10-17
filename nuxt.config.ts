@@ -1,4 +1,5 @@
 import Aura from "@primevue/themes/aura";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default defineNuxtConfig({
   app: {
@@ -32,7 +33,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-04-03",
   components: [{ path: "~/components", pathPrefix: false }],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/icon",
@@ -49,7 +50,14 @@ export default defineNuxtConfig({
         "./components/**/*.vue",
         "./layouts/**/*.vue",
         "./pages/**/*.vue"
-      ]
+      ],
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ["Inter", ...defaultTheme.fontFamily.sans]
+          }
+        }
+      }
     }
   },
   telemetry: false,

@@ -5,11 +5,11 @@ const DEADLINES_STORE_KEY = "lf_deadlines";
 const OPTIONS_STORE_KEY = "lf_options";
 
 const DEADLINES = [
-  "Add new deadlines.",
+  "Create new deadlines.",
   "Update the date of a deadline.",
   "Change app preferences using the gear icon at the top.",
   "Export data to / import data from a JSON file.",
-  "Purge local data from the dropdown."
+  "Purge your local data."
 ];
 
 const DEFAULT_OPTIONS: Options = {

@@ -37,7 +37,6 @@ export default defineNuxtConfig({
   icon: {
     mode: "svg",
     serverBundle: "local"
-    // clientBundle: { icons: ["uil:github", "logos:vitejs"], scan: true }
   },
   modules: [
     "@nuxtjs/tailwindcss",

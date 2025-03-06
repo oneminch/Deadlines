@@ -18,13 +18,6 @@ export default defineNuxtConfig({
           rel: "icon",
           href: "/favicon.ico"
         }
-      ],
-      script: [
-        {
-          src: "https://measure.minch.dev/minch-measure",
-          async: true,
-          "data-website-id": "29c33fb8-48e5-4081-9414-7a94aebcdde8"
-        }
       ]
     }
   },

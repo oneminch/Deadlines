@@ -4,7 +4,10 @@ updates:
     directory: /
     schedule:
       interval: monthly
-    ignore:
-      - dependency-name: '*'
+    groups:
+      monthly-updates:
+        patterns:
+          - '*'
         update-types:
-          - 'version-update:semver-major'
+          - minor
+          - patch

@@ -7,6 +7,8 @@
     DialogTitle,
     DialogTrigger
   } from "@/components/ui/dialog";
+  import { Label } from "@/components/ui/label";
+  import { Switch } from "@/components/ui/switch";
   import { cn } from "@/lib/utils";
 
   const props = defineProps<{
@@ -40,7 +42,7 @@
 </script>
 
 <template>
-  <Dialog>
+  <Dialog class="max-w-36">
     <DialogTrigger as-child>
       <Button
         aria-label="Toggle App Options"
@@ -49,18 +51,19 @@
         <Icon name="ph:gear-six-duotone" />
       </Button>
     </DialogTrigger>
-    <DialogContent>
+    <DialogContent class="max-w-96!">
       <DialogHeader>
         <DialogTitle class="sr-only">App Options</DialogTitle>
       </DialogHeader>
 
-      <div class="options min-w-72 space-y-4">
+      <div class="options min-w-72 space-y-4 text-sm">
         <h3 class="text-2xl font-bold">Options</h3>
-        <label
-          class="flex items-center justify-between bg-zinc-100 dark:bg-zinc-800 rounded-md py-4 px-6 cursor-pointer">
-          <p>Enable Toasts</p>
-          <ToggleSwitch v-model="toastsEnabled" />
-        </label>
+
+        <div
+          class="flex items-center gap-2 justify-between bg-zinc-100 dark:bg-zinc-800 rounded-md py-4 px-6 cursor-pointer">
+          <Label for="toggle-toast" class="text-base">Enable Toasts</Label>
+          <Switch id="toggle-toast" v-model="toastsEnabled" />
+        </div>
 
         <hr
           class="w-4/5 mx-auto my-4 block border-none bg-linear-to-r from-transparent via-zinc-200 dark:via-zinc-700 to-transparent h-px rounded-full" />

@@ -157,3 +157,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* In your main.css or a global style file */
+[data-slot="calendar"] button:not([type]) {
+  type: button;
+}

@@ -1,9 +1,7 @@
 import type { CustomNuxtApp, Options } from "~/utils/types";
 import OptionsController from "~/utils/options-controller";
-import AppAboutModal from "~/components/modals/AppAboutModal.vue";
 
 export default function useOptions() {
-  const { openModal } = useModal();
   const toast = useCustomToast();
   const { $offlineDB, hook } = useNuxtApp() as CustomNuxtApp;
   const controller = new OptionsController($offlineDB);
@@ -14,11 +12,8 @@ export default function useOptions() {
     try {
       options.value = (await controller.initializeOptionsStore()) as Options;
 
-      // Show info modal for first time only
       if (options.value.isFirstTime) {
-        openModal(AppAboutModal, {}, async () => {
-          await updateOptions({ isFirstTime: false }, false);
-        });
+        await updateOptions({ isFirstTime: false }, false);
       }
       console.log("Local Database Initialized for Options.");
     } catch (err) {

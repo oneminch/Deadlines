@@ -24,7 +24,7 @@
         <Icon name="ph:plus-bold" />
       </Button>
     </DialogTrigger>
-    <DialogContent>
+    <DialogContent class="max-w-96!">
       <DialogHeader>
         <DialogTitle class="sr-only">Create New Deadlines</DialogTitle>
       </DialogHeader>

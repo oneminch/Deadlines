@@ -1,9 +1,7 @@
-import type { ToastMessageOptions } from "primevue/toast";
-import { useToast } from "primevue/usetoast";
+import { toast } from "vue-sonner";
 
 export default function useCustomToast() {
   const options = useState<Options>("options");
-  const toast = useToast();
 
   const customToast = {
     success: (detail: string, bypass: boolean = false) => {
@@ -11,28 +9,16 @@ export default function useCustomToast() {
         console.log(detail);
         return;
       }
-      const toastOptions: ToastMessageOptions = {
-        severity: "success",
-        summary: "Success",
-        detail,
-        life: 3000
-      };
 
-      toast.add(toastOptions);
+      toast.success(detail);
     },
     error: (detail: string, bypass: boolean = false) => {
       if (!options.value.toastsEnabled && !bypass) {
         console.log(detail);
         return;
       }
-      const toastOptions: ToastMessageOptions = {
-        severity: "error",
-        summary: "Error",
-        detail,
-        life: 3000
-      };
 
-      toast.add(toastOptions);
+      toast.error(detail);
     }
   };
 

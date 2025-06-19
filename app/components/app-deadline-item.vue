@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-  import type { DeadlineItem } from "~/utils/types";
-  import { isOverdue } from "~/utils/helpers";
-  import { DateUtils } from "~/utils/date-utils";
-
   const props = defineProps<{ deadline: DeadlineItem }>();
 
   const emit = defineEmits<{

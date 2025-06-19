@@ -27,3 +27,4 @@ logs
 *.code-workspace
 archive
 .nuxtignore
+TODO.md

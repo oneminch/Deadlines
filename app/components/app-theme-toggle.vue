@@ -8,7 +8,7 @@
     const index = values.indexOf(colorMode.preference);
     const next = (index + 1) % values.length;
 
-    colorMode.preference = values[next];
+    colorMode.preference = values[next] as string;
   };
 </script>
 

@@ -3,19 +3,19 @@
   import "@fontsource/inter/500.css";
   import "@fontsource/inter/600.css";
   import "@fontsource/inter/700.css";
+  import { Toaster } from "@/components/ui/sonner";
+  import "vue-sonner/style.css";
 </script>
 
 <template>
   <main id="app">
-    <app-modal />
-
     <app-header />
 
     <app-deadline-list />
 
     <app-nav-bar />
 
-    <Toast position="bottom-center" class="w-80 sm:w-96" />
+    <Toaster />
   </main>
 </template>
 

@@ -15,7 +15,7 @@ interface Options {
   toastsEnabled?: boolean;
 }
 
-type DatePickerModelValue = null | Date | Date[] | (null | Date)[];
+type DatePickerModelValue = null | Date;
 
 type DBResponseType = DeadlineItem[] | Options | null;
 

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-  import type { DeadlineItem } from "~/utils/types";
-
   const { deadlines, deleteDeadlineItem, updateDeadlineItem } = useDeadlines();
 
   const handleItemDelete = async (deadlineId: string) => {

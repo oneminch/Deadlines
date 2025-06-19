@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import AppInputModal from "./AppInputModal.vue";
+  import AppInputModal from "./app-input-modal.vue";
 
   const { openModal } = useModal();
 

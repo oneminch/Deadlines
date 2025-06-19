@@ -1,7 +1,3 @@
-<script lang="ts" setup>
-  import { DateUtils } from "~/utils/date-utils";
-</script>
-
 <template>
   <header
     class="w-full my-8 mx-auto flex justify-between items-start select-none font-semibold text-3xl">

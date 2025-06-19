@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import AppOptionsModal from "./AppOptionsModal.vue";
+  import AppOptionsModal from "./app-options-modal.vue";
 
   const { openModal } = useModal();
 

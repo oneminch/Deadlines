@@ -50,19 +50,19 @@
       class="w-full h-10 text-base flex items-center justify-center rounded py-1 px-3 text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-600 focus-visible:global-focus" />
 
     <app-date-picker
-      class="!flex sm:!hidden"
+      class="flex! sm:hidden!"
       :date="currentDate"
       :is-inline="false"
       @update:date="(date) => (currentDate = date)" />
 
     <app-date-picker
-      class="!hidden sm:!flex"
+      class="hidden! sm:flex!"
       :date="currentDate"
       :is-inline="true"
       @update:date="(date) => (currentDate = date)" />
 
     <button
-      class="action-item !w-full !h-10 !bg-violet-500 !text-zinc-50 !border-none">
+      class="action-item w-full! h-10! bg-violet-500! text-zinc-50! border-none!">
       Create
     </button>
   </form>

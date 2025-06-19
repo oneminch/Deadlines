@@ -45,7 +45,7 @@
           ref="modalContainer"
           @click.stop>
           <button
-            class="icon-button !border-none !bg-transparent !hidden sm:!flex absolute top-2 right-2 !rounded-full"
+            class="icon-button border-none! bg-transparent! hidden! sm:flex! absolute top-2 right-2 rounded-full!"
             aria-label="Close Modal"
             title="Close Modal"
             @click="closeModal">
@@ -53,7 +53,7 @@
           </button>
           <component :is="component" v-bind="props" />
           <button
-            class="icon-button mt-6 mx-auto !text-xs !w-auto !h-8 !px-4 !flex md:!hidden !rounded-full"
+            class="icon-button mt-6 mx-auto text-xs! w-auto! h-8! px-4! flex! md:hidden! rounded-full!"
             @click="closeModal">
             Close
           </button>

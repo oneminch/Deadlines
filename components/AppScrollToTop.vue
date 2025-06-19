@@ -28,7 +28,7 @@
       :class="{ hidden: !enableButton }">
       <button
         @click="scrollToTop"
-        class="action-item overflow-hidden transition-all duration-300 ease-in-out shadow-md !rounded-full hover:!px-6 !w-10 sm:hover:!w-auto !h-10 !gap-x-0 sm:group"
+        class="action-item overflow-hidden transition-all duration-300 ease-in-out shadow-md rounded-full! hover:px-6! w-10! sm:hover:w-auto! h-10! gap-x-0! sm:group"
         aria-label="Scroll to Top">
         <span
           class="w-0 mr-0 overflow-hidden whitespace-nowrap transition-all duration-100 ease-in-out sm:group-hover:mr-2 sm:group-hover:w-32"

@@ -37,9 +37,9 @@
     </label>
 
     <hr
-      class="w-4/5 mx-auto my-4 block border-none bg-gradient-to-r from-transparent via-zinc-200 dark:via-zinc-700 to-transparent h-[1px] rounded-full" />
+      class="w-4/5 mx-auto my-4 block border-none bg-linear-to-r from-transparent via-zinc-200 dark:via-zinc-700 to-transparent h-px rounded-full" />
 
-    <button class="action-item !w-full" @click="exportData">
+    <button class="action-item w-full!" @click="exportData">
       Export to JSON
     </button>
 
@@ -48,15 +48,15 @@
       ref="fileInputRef"
       class="sr-only"
       @change="importData" />
-    <button class="action-item !w-full" @click="triggerFileInput">
+    <button class="action-item w-full!" @click="triggerFileInput">
       Import from JSON
     </button>
 
     <hr
-      class="w-4/5 mx-auto my-4 block border-none bg-gradient-to-r from-transparent via-zinc-200 dark:via-zinc-700 to-transparent h-[1px] rounded-full" />
+      class="w-4/5 mx-auto my-4 block border-none bg-linear-to-r from-transparent via-zinc-200 dark:via-zinc-700 to-transparent h-px rounded-full" />
 
     <app-confirmation-button
-      class="action-item !w-full !bg-red-500/50 hover:!bg-red-500 !border-red-600"
+      class="action-item w-full! bg-red-500/50! hover:bg-red-500! border-red-600!"
       initial-label="Purge Local Data"
       primary-confirmation-label="Are You Sure?"
       secondary-confirmation-label="Are You Sure?"

@@ -27,7 +27,7 @@
     <p
       class="w-full text-left pl-4 border-l-4 border-zinc-300 dark:border-zinc-600"
       :class="{
-        '!border-red-500': isOverdue(deadline.date)
+        'border-red-500!': isOverdue(deadline.date)
       }">
       <span :title="deadline.task" class="font-semibold">
         {{ deadline.task }}
@@ -44,8 +44,8 @@
         @update:date="onDateUpdate" />
 
       <app-confirmation-button
-        class="icon-button hover:!bg-red-500/50 hover:!border-red-600"
-        confirmation-class="!bg-red-500/50 !border-red-600"
+        class="icon-button hover:bg-red-500/50! hover:border-red-600!"
+        confirmation-class="bg-red-500/50! border-red-600!"
         initial-label="Delete Item"
         primary-confirmation-label="?"
         secondary-confirmation-label="Are You Sure?"

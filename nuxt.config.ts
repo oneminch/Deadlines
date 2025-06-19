@@ -1,5 +1,4 @@
-import Aura from "@primevue/themes/aura";
-import defaultTheme from "tailwindcss/defaultTheme";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   app: {
@@ -24,45 +23,20 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: ""
   },
-  compatibilityDate: "2024-04-03",
   components: [{ path: "~/components", pathPrefix: false }],
+  css: ["~/assets/css/main.css"],
   devtools: { enabled: false },
+  future: {
+    compatibilityVersion: 4
+  },
   icon: {
     mode: "svg",
     serverBundle: "local"
   },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxt/icon",
-    "@primevue/nuxt-module",
-    "@nuxtjs/color-mode"
-  ],
+  modules: ["@nuxt/icon", "@nuxtjs/color-mode"],
   ssr: false,
-  tailwindcss: {
-    config: {
-      mode: "jit",
-      darkMode: "class",
-      content: [
-        "./app.vue",
-        "./components/**/*.vue",
-        "./layouts/**/*.vue",
-        "./pages/**/*.vue"
-      ],
-      theme: {
-        extend: {
-          fontFamily: {
-            mono: ["Inter", ...defaultTheme.fontFamily.sans]
-          }
-        }
-      }
-    }
-  },
   telemetry: false,
-  primevue: {
-    options: {
-      theme: {
-        preset: Aura
-      }
-    }
+  vite: {
+    plugins: [tailwindcss()]
   }
 });

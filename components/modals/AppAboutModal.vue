@@ -18,7 +18,7 @@
         title="Nuxt"
         to="https://github.com/oneminch/Deadlines"
         external
-        class="!bg-zinc-950 !text-zinc-100 !border-zinc-500 hover:!bg-zinc-800">
+        class="bg-zinc-950! text-zinc-100! border-zinc-500! hover:bg-zinc-800!">
         <span>GitHub</span>
         <Icon name="ph:github-logo-duotone" />
       </nuxt-link>

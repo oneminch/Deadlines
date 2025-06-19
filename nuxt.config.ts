@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     mode: "svg",
     serverBundle: "local"
   },
-  modules: ["@nuxt/icon", "@nuxtjs/color-mode"],
+  modules: ["@nuxt/icon", "@nuxtjs/color-mode", "shadcn-nuxt"],
   ssr: false,
   telemetry: false,
   vite: {

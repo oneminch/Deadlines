@@ -12,10 +12,10 @@
     </hgroup>
 
     <div class="hidden sm:flex items-center gap-x-2">
-      <app-input-toggle />
-      <app-about-toggle />
+      <app-input-modal />
+      <app-about-modal />
       <app-theme-toggle />
-      <app-options-toggle />
+      <app-options-modal />
     </div>
   </header>
 </template>

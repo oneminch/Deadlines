@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { Button } from "@/components/ui/button";
+
   const colorMode = useColorMode();
 
   const onClick = () => {
@@ -11,14 +13,14 @@
 </script>
 
 <template>
-  <button
+  <Button
     aria-label="Toggle Color Mode"
     title="Toggle Color Mode"
-    class="icon-button"
+    class="icon-button!"
     @click="onClick">
     <ColorScheme placeholder="...">
       <Icon v-if="colorMode.preference === 'dark'" name="ph:moon-duotone" />
       <Icon v-else name="ph:sun-duotone" />
     </ColorScheme>
-  </button>
+  </Button>
 </template>

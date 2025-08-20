@@ -16,9 +16,9 @@ Deadlines is a simple, offline deadline tracker.
 
 ## Want to self-host?
 
-| Vercel                        | Netlify                        | Cloudflare Pages                        |
-| ----------------------------- | ------------------------------ | --------------------------------------- |
-| [![Vercel][vrc-img]][vrc-url] | [![Netlify][ntl-img]][ntl-url] | [![Cloudflare Pages][cfp-img]][cfp-url] |
+| GitHub Pages                  | Vercel                        | Netlify                        | Cloudflare Pages                        |
+| ------------------------------| ----------------------------- | ------------------------------ | --------------------------------------- |
+| [![GitHub][ghp-img]][ghp-url] | [![Vercel][vrc-img]][vrc-url] | [![Netlify][ntl-img]][ntl-url] | [![Cloudflare Pages][cfp-img]][cfp-url] |
 
 ## Development
 
@@ -34,3 +34,5 @@ Deadlines is a simple, offline deadline tracker.
 [ntl-url]: https://app.netlify.com/start/deploy?repository=https://github.com/oneminch/deadlines
 [vrc-img]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [vrc-url]: https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Foneminch%2Fdeadlines
+[ghp-img]: https://img.shields.io/badge/GitHub-f1f5f9?style=for-the-badge&logo=github&logoColor=black
+[ghp-url]: https://github.com/new?template_name=Deadlines&template_owner=oneminch

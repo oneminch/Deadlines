@@ -19,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "joi": "^17.13.3",
+    "joi": "^18.0.1",
     "localforage": "^1.10.0",
     "lucide-vue-next": "^0.542.0",
     "nuxt": "^3.18.1",

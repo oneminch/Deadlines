@@ -34,8 +34,11 @@ export default defineNuxtConfig({
     mode: "svg",
     provider: "none",
     clientBundle: {
-      scan: true
-    }
+      scan: {
+        globInclude: ['app/components/**/*.vue'],
+      },
+    },
+    serverBundle: false
   },
   ssr: false,
   telemetry: false,

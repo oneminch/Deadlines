@@ -13,7 +13,7 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.6",
     "@internationalized/date": "^3.9.0",
-    "@nuxt/icon": "^1.15.0",
+    "@nuxt/icon": "^2.0.0",
     "@tailwindcss/vite": "^4.1.12",
     "@vueuse/core": "^13.8.0",
     "class-variance-authority": "^0.7.1",

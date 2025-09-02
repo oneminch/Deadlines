@@ -1,6 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  modules: ["@nuxt/icon", "@nuxtjs/color-mode", "shadcn-nuxt"],
   app: {
     head: {
       htmlAttrs: {
@@ -36,7 +37,6 @@ export default defineNuxtConfig({
       scan: true
     }
   },
-  modules: ["@nuxt/icon", "@nuxtjs/color-mode", "shadcn-nuxt"],
   ssr: false,
   telemetry: false,
   vite: {

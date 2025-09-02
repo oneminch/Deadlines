@@ -15,7 +15,7 @@
     "@internationalized/date": "^3.9.0",
     "@nuxt/icon": "^2.0.0",
     "@tailwindcss/vite": "^4.1.12",
-    "@vueuse/core": "^13.8.0",
+    "@vueuse/core": "^13.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -30,7 +30,7 @@
     "vue": "latest",
     "vue-sonner": "^2.0.8"
   },
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.15.1",
   "devDependencies": {
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/simple-icons": "^1.2.50",

@@ -32,15 +32,13 @@ export default defineNuxtConfig({
   },
   icon: {
     mode: "svg",
-    provider: "none",
     clientBundle: {
-      scan: {
-        globInclude: ['app/components/**/*.vue'],
-      },
-    },
-    serverBundle: false
+      scan: true
+    }
   },
-  ssr: false,
+  routeRules: {
+    "/": { prerender: true }
+  },
   telemetry: false,
   vite: {
     plugins: [tailwindcss()]

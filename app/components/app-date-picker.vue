@@ -61,7 +61,7 @@
         variant="outline"
         :class="
           cn(
-            'font-normal w-40 h-10 *:shrink-0 rounded-sm text-zinc-900 dark:text-zinc-50 bg-white dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 focus-visible:global-focus! pr-6 max-w-52 overflow-hidden text-center focus-visible:outline-none gap-2',
+            'font-normal min-w-40 h-10 *:shrink-0 rounded-sm text-zinc-900 dark:text-zinc-50 bg-white dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 focus-visible:global-focus! pr-6 max-w-none overflow-hidden text-center focus-visible:outline-none gap-2',
             !localDateValue && 'text-muted-foreground'
           )
         ">

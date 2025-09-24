@@ -32,6 +32,8 @@
     (e: "update:date", value: Date): void;
   }>();
 
+  const datePickerOpen = ref(false);
+
   const localDateValue = computed({
     get: () =>
       props.date ? parseDate(props.date.toISOString().slice(0, 10)) : undefined,
@@ -54,7 +56,7 @@
       initial-focus
       class="flex flex-col items-center rounded border border-zinc-200 dark:border-zinc-700" />
   </div>
-  <Popover :class="cn(props.class)" v-else>
+  <Popover :class="cn(props.class)" v-model:open="datePickerOpen" v-else>
     <PopoverTrigger as-child>
       <Button
         type="button"
@@ -72,6 +74,7 @@
     <PopoverContent class="w-auto p-0">
       <Calendar
         v-model="localDateValue"
+        @update:model-value="() => (datePickerOpen = false)"
         class="rounded-md border border-zinc-200 dark:border-zinc-700 shadow"
         initial-focus />
     </PopoverContent>

@@ -32,10 +32,15 @@
   const handlePurge = async () => {
     await purgeDeadlines();
   };
+
+  const optionsModalProps = {
+    title: "App Options",
+    description: "Settings for the app."
+  };
 </script>
 
 <template>
-  <app-modal title="App Options">
+  <app-modal v-bind="optionsModalProps">
     <template #trigger>
       <Button
         aria-label="Toggle App Options"

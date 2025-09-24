@@ -5,10 +5,15 @@
   const props = defineProps<{
     triggerClass?: string;
   }>();
+
+  const inputModalProps = {
+    title: "Create New Deadlines",
+    description: "Use the input field and date picker to create a new deadline."
+  };
 </script>
 
 <template>
-  <app-modal title="Create New Deadlines">
+  <app-modal v-bind="inputModalProps">
     <template #trigger>
       <Button
         aria-label="Toggle Input"

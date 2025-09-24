@@ -5,10 +5,15 @@
   const props = defineProps<{
     triggerClass?: string;
   }>();
+
+  const aboutModalProps = {
+    title: "About",
+    description: "Information about the app."
+  };
 </script>
 
 <template>
-  <app-modal title="About">
+  <app-modal v-bind="aboutModalProps">
     <template #trigger>
       <Button
         aria-label="Toggle App Information"

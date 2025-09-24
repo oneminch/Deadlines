@@ -4,6 +4,7 @@
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
     DialogTrigger
   } from "@/components/ui/dialog";
   import {
@@ -13,6 +14,7 @@
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
+    DrawerDescription,
     DrawerTrigger
   } from "@/components/ui/drawer";
   import { Button } from "@/components/ui/button";
@@ -20,6 +22,7 @@
 
   defineProps<{
     title: string;
+    description: string;
   }>();
 
   const isDesktop = useMediaQuery("(min-width: 640px)");
@@ -30,7 +33,8 @@
     Trigger: isDesktop.value ? DialogTrigger : DrawerTrigger,
     Content: isDesktop.value ? DialogContent : DrawerContent,
     Header: isDesktop.value ? DialogHeader : DrawerHeader,
-    Title: isDesktop.value ? DialogTitle : DrawerTitle
+    Title: isDesktop.value ? DialogTitle : DrawerTitle,
+    Description: isDesktop.value ? DialogDescription : DrawerDescription
   }));
 </script>
 
@@ -47,6 +51,9 @@
       ]">
       <component :is="Modal.Header">
         <component :is="Modal.Title" class="sr-only">{{ title }}</component>
+        <component :is="Modal.Description" class="sr-only">{{
+          description
+        }}</component>
       </component>
 
       <slot />

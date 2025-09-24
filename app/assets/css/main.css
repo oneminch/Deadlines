@@ -23,6 +23,10 @@
   @apply h-8 flex items-center justify-center *:shrink-0 gap-x-2 rounded-sm py-1 px-3 text-zinc-900 dark:text-zinc-50 bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-600 border border-zinc-300 dark:border-zinc-600 focus-visible:global-focus;
 }
 
+@utility update-highlight {
+  @apply content-[''] absolute inset-0 -z-20 -mx-4 rounded-lg bg-amber-100;
+}
+
 * {
   @apply font-sans box-border transition-all duration-200;
 }

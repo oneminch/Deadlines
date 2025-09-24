@@ -6,8 +6,18 @@
     (e: "delete", deadlineId: string): void;
   }>();
 
+  const isHighlighted = ref(false);
+
+  const highlightItem = () => {
+    isHighlighted.value = true;
+    setTimeout(() => {
+      isHighlighted.value = false;
+    }, 2000);
+  };
+
   const onDateUpdate = (newDate: Date) => {
     props.deadline.date = newDate;
+    highlightItem();
 
     emit("update", props.deadline);
   };
@@ -19,7 +29,10 @@
 
 <template>
   <li
-    class="w-full flex flex-col items-start gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:justify-between sm:gap-y-0 sm:gap-x-2 py-4 border-b border-b-zinc-100 dark:border-b-zinc-700 last:border-none">
+    :class="[
+      'w-full flex flex-col items-start gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:justify-between sm:gap-y-0 sm:gap-x-2 py-4 border-b border-b-zinc-100 dark:border-b-zinc-700 last:border-none isolate z-10 relative mb-0.5',
+      { 'before:update-highlight': isHighlighted }
+    ]">
     <p
       class="w-full text-left pl-4 border-l-4 border-zinc-300 dark:border-zinc-600"
       :class="{

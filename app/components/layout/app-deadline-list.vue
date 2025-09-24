@@ -16,8 +16,8 @@
     <template v-if="deadlines.length > 0">
       <ul>
         <app-deadline-item
-          v-for="(deadline, index) in deadlines"
-          :key="index"
+          v-for="deadline in deadlines"
+          :key="deadline.id"
           :deadline="deadline"
           @delete="handleItemDelete"
           @update="handleItemUpdate" />

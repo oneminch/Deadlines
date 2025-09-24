@@ -7,8 +7,11 @@ export default function useOptions() {
   const controller = new OptionsController($offlineDB);
 
   const options = useState<Options>("options", () => ({}));
+  const initialized = useState("options-db:initialized", () => false);
 
   hook("app:mounted", async () => {
+    if (initialized.value) return;
+
     try {
       options.value = (await controller.initializeOptionsStore()) as Options;
 
@@ -16,6 +19,7 @@ export default function useOptions() {
         await updateOptions({ isFirstTime: false }, false);
       }
       console.log("Local Database Initialized for Options.");
+      initialized.value = true;
     } catch (err) {
       console.error("Error Initializing Local Database for Options:", err);
     }

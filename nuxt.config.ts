@@ -36,9 +36,7 @@ export default defineNuxtConfig({
       scan: true
     }
   },
-  routeRules: {
-    "/": { prerender: true }
-  },
+  ssr: false,
   telemetry: false,
   vite: {
     plugins: [tailwindcss()]

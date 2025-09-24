@@ -8,8 +8,11 @@ export default function useDeadlines() {
   const { options } = useOptions();
 
   const deadlines = useState<DeadlineItem[]>("deadlines", () => []);
+  const initialized = useState("deadlines-db:initialized", () => false);
 
   hook("app:mounted", async () => {
+    if (initialized.value) return;
+
     try {
       deadlines.value =
         (await controller.initializeDeadlinesStore()) as DeadlineItem[];
@@ -18,6 +21,7 @@ export default function useDeadlines() {
         ? "Initialized"
         : "Restored";
       toast.success(`Local Database ${initializeType} for Deadlines.`);
+      initialized.value = true;
     } catch (err) {
       // console.error("Error Initializing Deadlines Data", err);
       toast.error("Error Initializing Local Database for Deadlines.");

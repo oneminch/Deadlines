@@ -5,10 +5,12 @@
 
 @theme {
   --font-sans: "Inter", sans-serif;
+  --color-brand: var(--color-violet-500);
+  --color-brand-light: var(--color-violet-50);
 }
 
 @utility global-focus {
-  @apply outline-hidden ring-2 ring-violet-500/75 ring-offset-2 ring-offset-white dark:ring-offset-zinc-800;
+  @apply outline-hidden ring-2 ring-brand/75 ring-offset-2 ring-offset-white dark:ring-offset-zinc-800;
 }
 
 @utility icon-link {
@@ -24,7 +26,7 @@
 }
 
 @utility update-highlight {
-  @apply content-[''] absolute inset-0 -z-20 -mx-4 rounded-lg bg-amber-100 dark:bg-amber-900;
+  @apply content-[''] absolute inset-0 -z-20 -mx-4 rounded-lg bg-amber-500/25;
 }
 
 * {

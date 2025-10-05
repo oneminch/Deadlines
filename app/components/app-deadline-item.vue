@@ -34,7 +34,7 @@
       { 'before:update-highlight': isHighlighted }
     ]">
     <p
-      class="w-full text-left pl-4 border-l-4 border-zinc-300 dark:border-zinc-600"
+      class="w-full text-left pl-4 border-l-4 border-brand"
       :class="{
         'border-red-500!': isOverdue(deadline.date)
       }">

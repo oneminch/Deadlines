@@ -23,7 +23,7 @@
 <template>
   <Transition name="scale">
     <div
-      class="flex items-center gap-x-2 shadow-md rounded-full p-2 sm:p-1 bg-violet-50 dark:bg-zinc-900 border-2 sm:border border-violet-500"
+      class="flex items-center gap-x-2 shadow-md rounded-full p-2 sm:p-1 bg-brand-light dark:bg-zinc-900 border-2 sm:border border-brand"
       v-show="enableButton"
       :class="{ hidden: !enableButton }">
       <button

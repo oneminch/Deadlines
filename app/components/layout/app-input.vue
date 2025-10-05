@@ -53,7 +53,7 @@
       @update:date="(date) => (currentDate = date)" />
 
     <button
-      class="action-item w-full! h-10! bg-violet-500! text-zinc-50! border-none!">
+      class="action-item w-full! h-10! bg-brand! text-zinc-50! border-none!">
       Create
     </button>
   </form>

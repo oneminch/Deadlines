@@ -24,7 +24,7 @@
 }
 
 @utility update-highlight {
-  @apply content-[''] absolute inset-0 -z-20 -mx-4 rounded-lg bg-amber-100;
+  @apply content-[''] absolute inset-0 -z-20 -mx-4 rounded-lg bg-amber-100 dark:bg-amber-900;
 }
 
 * {
